@@ -1,0 +1,13 @@
+.alert {
+  border-width: 0 0 0 4px;
+  color: inherit;
+
+  > p,
+  > ol,
+  > ul,
+  > pre {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

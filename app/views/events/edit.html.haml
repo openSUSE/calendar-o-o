@@ -1,0 +1,50 @@
+%h1 Edit the event
+= form_with(model: @event, url: team_event_path(@team, @event), html: { data: { controller: 'event-form slug-form', 'event-form-recurrence-url-value': team_event_recurrences_path(@team, @event), 'event-form-type-value': 'edit' } }) do |f|
+  - if @event.errors.any?
+    - @event.errors.full_messages.each do |msg|
+      .alert.alert-danger
+        = msg
+  .form-floating.mb-3
+    = f.text_field :name, required: true, class: 'form-control', placeholder: 'Name', data: { action: 'slug-form#prefillSlug' }
+    = f.label :name, 'Name'
+  .form-floating.mb-3
+    = f.text_field :slug, required: true, class: 'form-control', placeholder: 'Event id', pattern: '^[a-z0-9_]+$', data: { 'slug-form-target': 'slug' }
+    = f.label :slug, 'Event id'
+  .form-floating.mb-3
+    = f.text_area :description, size: "70x5", class: 'form-control h-auto', placeholder: 'Description'
+    = f.label :description, 'Description'
+  .form-floating.mb-3
+    = f.text_field :meeting_url, class: 'form-control', placeholder: 'Meeting link'
+    = f.label :meeting_url, 'Meeting link'
+  .input-group.mb-3
+    .form-floating
+      = f.datetime_local_field :starts_at, required: true, class: 'form-control', data: { action: 'event-form#date', 'event-form-target': 'startsAt' }
+      = f.label :starts_at, 'Starts At'
+    .form-floating
+      = f.datetime_local_field :ends_at, required: true, class: 'form-control'
+      = f.label :ends_at, 'Ends At'
+    .form-floating
+      = f.time_zone_select :timezone, nil, { include_blank: false }, class: 'form-select'
+      = f.label :timezone, 'Timezone'
+  .mb-3
+    %h4 Recurrence rules
+    #recurrences
+      - @event.recurrences.each_with_index do |recurrence, index|
+        = render partial: 'recurrences/form', locals: { index:, recurrence: }
+    %button.btn.btn-success.mb-3{ type: 'button', data: { action: 'event-form#appendRecurrenceForm' } } Add Recurrence rule
+    - if @event.exceptions.present?
+      %h4 Exceptions
+      #exceptions
+        = f.fields_for :exceptions do |fe|
+          .row{ data: { controller: 'exception-form' } }
+            .col
+              .form-floating
+                = fe.datetime_local_field :time, class: 'form-control'
+                = fe.label :time, 'Time'
+            .col-auto
+              .form-destroy
+                = fe.check_box :_destroy, class: 'form-check-input'
+                = fe.label :_destroy, 'Remove', class: 'form-check-disabled'
+                = fe.label :_destroy, 'Restore', class: 'form-check-enabled'
+            %hr.mt-3
+  = f.submit 'Save', class: 'btn btn-primary'

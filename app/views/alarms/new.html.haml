@@ -1,0 +1,24 @@
+%h1 Create an alarm
+= form_with(model: Alarm.new, url: team_event_alarms_path(@team, @event), html: { data: { controller: 'alarm-form' } }) do |f|
+  - if @alarm.errors.any?
+    - @alarm.errors.full_messages.each do |msg|
+      .alert.alert-danger
+        = msg
+  = f.hidden_field :alarmable_type, value: params[:team] ? @team.class.name : current_user.class.name
+  = f.hidden_field :alarmable_id, value: params[:team] ? @team.id : current_user.id
+  .input-group.mb-3
+    .form-floating
+      = f.select :type, { Email: 'AlarmEmail', Notification: 'AlarmNotification' }, {}, class: 'form-select', placeholder: 'Type', data: { action: 'alarm-form#toggleEmail', 'alarm-form-target': 'type' }
+      = f.label :type, 'Type'
+    .form-floating{ data: { 'alarm-form-target': 'email' } }
+      = f.email_field :email, class: 'form-control', placeholder: 'Email address'
+      = f.label :email, 'Email address'
+  .row.g-2.mb-3.align-items-center
+    .col-auto= f.label :interval, 'Trigger'
+    .col-auto= f.number_field :interval, class: 'form-control'
+    .col-auto= f.select :period, f.object.periods, {}, class: 'form-select'
+    .col-auto= f.label :period, 'before the event'
+  .form-floating.mb-3
+    = f.text_area :description, class: 'form-control h-auto', placeholder: 'Description'
+    = f.label :description, 'Description'
+  = f.submit 'Create', class: 'btn btn-primary'

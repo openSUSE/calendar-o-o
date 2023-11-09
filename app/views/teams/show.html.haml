@@ -1,0 +1,35 @@
+.row
+  .col-md-3.mb-5
+    %h1.d-flex.justify-content-between
+      = @team.name
+      .buttons.text-end
+        = link_to('Webcal', team_url(@team, format: :ics, protocol: :webcal), class: 'btn btn-secondary')
+        - if policy(TeamsUser.new(team: @team, user: current_user, role: :member)).create?
+          = form_with(model: TeamsUser.new(), url: team_teams_users_path(@team), method: :post, class: 'd-inline') do |f|
+            = f.hidden_field :team_id, value: @team.id
+            = f.hidden_field :user_id, value: current_user.id
+            = f.hidden_field :role, value: :member
+            = f.submit 'Join', class: 'btn btn-primary'
+        - if policy(@team).update?
+          = link_to('Edit', edit_team_path(@team), class: 'btn btn-secondary')
+        - if policy(@team).destroy?
+          = button_to 'Remove', team_path(@team), method: :delete, form: { class: 'd-inline' }, class: 'btn btn-danger'
+    - @team.teams_users.reverse.each do |teams_user|
+      = render partial: 'teams_users/teams_user', locals: { teams_user: teams_user, team: @team }
+  .col-md-9
+    - @team.events.each do |event|
+      .card.card-body.mb-3.w-100
+        .row
+          = link_to(team_event_path(@team, event), class: 'col text-decoration-none link-body-emphasis') do
+            %h3.m-0= event.name
+            - schedule = event.schedule.next_occurrence
+            = local_time(schedule.start_time, :short)
+            \-
+            = local_time(schedule.end_time, :short)
+          .col-auto
+            - if policy(event).update?
+              = link_to('Edit', edit_team_event_path(@team, event), class: 'btn btn-secondary')
+            - if policy(event).destroy?
+              = button_to 'Remove', team_event_path(@team, event), method: :delete, form: { class: 'd-inline' }, class: 'btn btn-danger'
+    - if policy(Event.new(team: @team)).create?
+      = link_to('New event', new_team_event_path(@team), class: 'btn btn-primary mx-auto')

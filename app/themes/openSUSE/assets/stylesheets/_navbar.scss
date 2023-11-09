@@ -1,0 +1,56 @@
+.navbar {
+  background: var(--bs-secondary-bg);
+  border-bottom: 2px solid $green;
+
+  &.navbar-transparent {
+    background-color: transparent;
+    border: 0;
+  }
+
+  .navbar-brand {
+    display: inline-flex;
+
+    img {
+      margin-right: $spacer/2;
+    }
+  }
+
+  .form-control {
+    border: 0;
+  }
+
+  .btn-secondary {
+    border: 0;
+  }
+
+  .avatar {
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 1em;
+    margin-top: -0.3em;
+    margin-bottom: -0.2em;
+  }
+
+  .dropdown-menu {
+    max-height: calc(100vh - 3.3em);
+    overflow: auto;
+  }
+}
+
+.navbar-toggler {
+  margin-left: auto;
+}
+
+.megamenu-toggler,
+.darkmode-toggler {
+  display: block !important; // make it always visible
+  margin-left: 10px;
+}
+
+@include media-breakpoint-down(sm) {
+  // TODO: deal with different navbar break point
+  .navbar-collapse {
+    order: 1;
+    margin-top: $navbar-padding-y;
+  }
+}

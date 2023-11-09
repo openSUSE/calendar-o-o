@@ -1,0 +1,35 @@
+.modal.fade#sign-in-modal{ tabindex: -1 }
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h5.mb-0 Sign In
+        %button.btn-close{ type: 'button', data: { 'bs-dismiss': 'modal' }, aria: { label: 'Close' } }
+      .modal-body
+        - if Devise.mappings[:user].registerable?
+          = link_to "Sign up", new_registration_path(:user), class: 'btn btn-light d-block mb-1'
+        - Rails.configuration.site.dig(:authentication, :sign_up)&.each do |sign_up|
+          = link_to "Sign up to #{sign_up[:name]}", sign_up[:link], class: 'btn btn-light d-block mb-1'
+      .text-center
+        or
+      - if Devise.mappings[:user].omniauthable?
+        .modal-body
+          - providers = Rails.configuration.site.dig(:authentication, :omniauth)&.to_h { |k,v| [v[:name], v[:title]] }
+          - User.omniauth_providers.each do |provider|
+            = button_to "Log in with #{providers[provider]}", omniauth_authorize_path(:user, provider), data: { turbo: false }, class: 'btn btn-light w-100 mb-1'
+      - if Devise.mappings[:user].database_authenticatable?
+        = form_for(User.new, as: :user, url: session_path(:user)) do |f|
+          .modal-body
+            .form-floating.mb-3
+              = f.text_field :username, autofocus: true, autocomplete: "username", placeholder: :username, class: 'form-control'
+              = f.label :username
+            .form-floating.mb-3
+              = f.password_field :password, autocomplete: "current-password", placeholder: :password, class: 'form-control'
+              = f.label :password
+            - if Devise.mappings[:user].rememberable?
+              .form-check.mb-3
+                = f.check_box :remember_me, class: 'form-check-input'
+                = f.label :remember_me, class: 'form-check-label'
+            = render "shared/devise_links"
+          .modal-footer
+            %button.btn.btn-secondary{ type: 'button', data: { 'bs-dismiss': 'modal' } } Close
+            = f.submit "Log in", class: 'btn btn-primary'

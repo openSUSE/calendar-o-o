@@ -1,0 +1,34 @@
+test:
+  authentication:
+    local: true
+
+development:
+  hostname: localhost:3000
+  authentication:
+    local: true
+
+production:
+  program_name: openSUSE Calendar
+  tagline: openSUSE Contributor meetings are open for everyone to join
+  theme: openSUSE
+  authentication:
+    omniauth:
+      openid_connect:
+        name: :oidc
+        title: SUSE Community Accounts
+        scope:
+        - :openid
+        - :email
+        - :profile
+        response_type: :code
+        uid_field: preferred_username
+        client_options:
+          port: 443
+          scheme: https
+          host: id.opensuse.org
+          identifier: 
+          secret: 
+          redirect_uri: https://paste.opensuse.org/auth/oidc/callback
+    sign_up:
+    - name: SUSE Community Accounts
+      link: https://idp-portal.suse.com/univention/self-service/#page=createaccount

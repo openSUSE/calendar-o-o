@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby.ruby3.2
+# frozen_string_literal: true
+
+require_relative '../config/boot'
+require 'rake'
+Rake.application.run

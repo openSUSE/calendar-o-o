@@ -1,0 +1,39 @@
+%nav.navbar.navbar-expand-sm
+  .container-fluid
+    = render 'theme/brand'
+    %button.navbar-toggler{ data: { bs: { target: '#navbar-content',
+                                          toggle: 'collapse' } },
+                            type: 'button',
+                            aria: { controls: 'navbar-content',
+                                    expanded: 'false',
+                                    label: 'Toggle navigation' } }
+      %span.navbar-toggler-icon
+    .collapse.navbar-collapse#navbar-content
+      %ul.navbar-nav.me-auto
+        %li.nav-item
+          = link_to 'Teams', teams_path, class: 'nav-link'
+        %li.nav-item
+          = link_to('Subscribe with Webcal', main_index_url(format: :ics, protocol: :webcal), class: 'nav-link')
+      .navbar-nav
+        - if user_signed_in?
+          .dropdown.nav-item
+            %a.nav-link.dropdown-toggle{ 'aria-expanded': 'false', href: '#',
+                                         role: 'button',
+                                         'data-bs-toggle': 'dropdown' }
+              = avatar current_user
+              = current_user.name
+            %ul.dropdown-menu.dropdown-menu-end
+              %li
+                = link_to 'My teams', teams_path(user: current_user.username), class: 'dropdown-item'
+              - if policy(User).index?
+                %li
+                  = link_to 'Manage users', users_path, class: 'dropdown-item'
+              %li
+                %hr.dropdown-divider
+              %li
+                = button_to 'Log out', destroy_user_session_path,
+                            method: :delete,
+                            class: 'dropdown-item text-danger'
+        - else
+          %button.btn.btn-primary{ type: 'button', data: { 'bs-toggle': 'modal', 'bs-target': '#sign-in-modal' } } Sign in
+          = render partial: 'layouts/sign_in_modal'

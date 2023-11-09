@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  email: MyString
+  trigger: 1
+  description: MyText
+  alarmable_type: MyString
+  alarmable_id: 1
+
+two:
+  type: 
+  email: MyString
+  trigger: 1
+  description: MyText
+  alarmable_type: MyString
+  alarmable_id: 1

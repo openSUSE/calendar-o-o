@@ -1,0 +1,12 @@
+= turbo_frame_tag teams_user do
+  .row
+    .col-auto
+      = avatar teams_user.user, size: 40
+    .col
+      .fw-bold.m-0= teams_user.user.name
+      %span.text-muted= teams_user.role
+    .col-auto
+      - if policy(teams_user).update?
+        = link_to 'Edit', edit_team_teams_user_path(team, teams_user), class: 'btn btn-sm btn-secondary'
+      - if policy(teams_user).destroy?
+        = button_to 'Remove', team_teams_user_path(team, teams_user), method: :delete, form: { class: 'd-inline' }, class: 'btn btn-sm btn-danger'
