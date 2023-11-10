@@ -11,6 +11,8 @@ production:
   program_name: openSUSE Calendar
   tagline: openSUSE Contributor meetings are open for everyone to join
   theme: openSUSE
+  mail:
+    from: calendar@opensuse.org
   authentication:
     omniauth:
       openid_connect:
