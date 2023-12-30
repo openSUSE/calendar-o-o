@@ -28,12 +28,12 @@
               - if policy(User).index?
                 %li
                   = link_to 'Manage users', users_path, class: 'dropdown-item'
-              %li
-                %hr.dropdown-divider
-              %li
-                = button_to 'Log out', destroy_user_session_path,
-                            method: :delete,
-                            class: 'dropdown-item text-danger'
+              -#%li
+              -#  %hr.dropdown-divider
+              -#%li
+              -#  = button_to 'Log out', destroy_user_session_path,
+              -#              method: :delete,
+              -#              class: 'dropdown-item text-danger'
         - else
           %button.btn.btn-primary{ type: 'button', data: { 'bs-toggle': 'modal', 'bs-target': '#sign-in-modal' } } Sign in
           = render partial: 'layouts/sign_in_modal'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_09_084537) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_30_145530) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,7 +56,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_09_084537) do
     t.uuid "team_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["slug"], name: "index_events_on_slug", unique: true
+    t.index ["team_id", "slug"], name: "index_events_on_team_id_and_slug", unique: true
     t.index ["team_id"], name: "index_events_on_team_id"
   end
 

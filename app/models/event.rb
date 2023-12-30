@@ -14,6 +14,7 @@ class Event < ApplicationRecord
                                 allow_destroy: true
 
   validates :slug, format: { with: /\A[a-z0-9_]+\z/, message: 'Has to be alphanumeric with underscores'}
+  validates :slug, uniqueness: { scope: :team_id }
 
   after_save :populate_occurrences
 
@@ -88,7 +89,7 @@ class Event < ApplicationRecord
 
   def destroy_old_occurrences
     occurrences.each do |o|
-      next if schedule.occurring_between?(o.starts_at, o.ends_at)
+      next if schedule.occurs_between?(o.starts_at, o.ends_at)
 
       o.destroy
     end

@@ -28,5 +28,6 @@ module CalendarOO
     config.site = config_for(:site)
 
     Rails.application.routes.default_url_options[:host] = Rails.configuration.site[:hostname]
+    config.action_cable.allowed_request_origins = ["https://#{Rails.configuration.site[:hostname]}"]
   end
 end

@@ -44,10 +44,10 @@ class Team < ApplicationRecord
   end
 
   def owner
-    teams_users.find_by(role: :owner)&.user
+    teams_users.find_by(role: 'owner')&.user
   end
 
   def admins
-    teams_users.where(role: :admin)&.pluck(&:user)
+    User.where(id: Team.first.teams_users.where(role: 'admin')&.pluck(:user_id))
   end
 end

@@ -18,12 +18,12 @@ class TeamPolicy < ApplicationPolicy
   def update?
     return false unless user
 
-    user.admin? || record.team.owner == user || record.team.admins.include?(user)
+    user.admin? || record.owner == user || record.admins.include?(user)
   end
 
   def destroy?
     return false unless user
 
-    user.admin? || record.team.owner == user
+    user.admin? || record.owner == user
   end
 end

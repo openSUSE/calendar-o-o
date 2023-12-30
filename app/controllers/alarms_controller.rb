@@ -47,6 +47,7 @@ class AlarmsController < ApplicationController
   private
 
   def alarm_params
-    params.require(:alarm).permit(:type, :email, :interval, :period, :description, :alarmable_type, :alarmable_id)
+    type = [:alarm, :alarm_email, :alarm_notification].map { |t| params.key?(t) ? t : nil }.compact.first
+    params.require(type).permit(:type, :email, :interval, :period, :description, :alarmable_type, :alarmable_id)
   end
 end

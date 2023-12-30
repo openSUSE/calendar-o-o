@@ -8,15 +8,17 @@
     - if policy(@event.alarms.new).create?
       = link_to 'Create alarm', new_team_event_alarm_path(@team, @event), class: 'btn btn-success'
 - @alarms.each do |alarm|
-  = link_to edit_team_event_alarm_path(@team, @event, alarm), class: 'card card-body mb-3 text-decoration-none' do
-    %h3.mb-0.d-flex.justify-content-between
-      %span
-        = alarm.class.name.gsub('Alarm', '')
-        for
-        - if alarm.action == 'EMAIL'
-          = alarm.email.presence || alarm.alarmable.email
-        - else
-          = alarm.alarmable.class == User ? alarm.alarmable.username : alarm.alarmable.name
+  .card.card-body.mb-3
+    .d-flex.justify-content-between
+      = link_to edit_team_event_alarm_path(@team, @event, alarm) do
+        %h3.mb-0
+          %span
+            = alarm.class.name.gsub('Alarm', '')
+            for
+            - if alarm.action == 'EMAIL'
+              = alarm.email.presence || alarm.alarmable.email
+            - else
+              = alarm.alarmable.class == User ? alarm.alarmable.username : alarm.alarmable.name
       .buttons
         - if policy(alarm).destroy?
           = button_to 'Remove', team_event_alarm_path(@team, @event, alarm), method: :delete, form: { class: 'd-inline' }, class: 'btn btn-danger'

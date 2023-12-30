@@ -13,7 +13,7 @@ module Clockwork
       event_occurrence.event.alarms.each do |alarm|
         notification_time = event_occurrence.starts_at - alarm.trigger.seconds
         if notification_time > Time.now && notification_time < Time.now + 1.hours
-          SendNotificationJob.set(wait_until: notification_time).perform_later(event_occurrence.id, alarm.id)
+          ::SendNotificationsJob.set(wait_until: notification_time).perform_later(event_occurrence.id, alarm.id)
         end
       end
     end

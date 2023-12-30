@@ -22,10 +22,10 @@
         .row
           = link_to(team_event_path(@team, event), class: 'col text-decoration-none link-body-emphasis') do
             %h3.m-0= event.name
-            - schedule = event.schedule.next_occurrence
-            = local_time(schedule.start_time, :short)
-            \-
-            = local_time(schedule.end_time, :short)
+            - if (schedule = event.schedule.next_occurrence)
+              = local_time(schedule.start_time, :short)
+              \-
+              = local_time(schedule.end_time, :short)
           .col-auto
             - if policy(event).update?
               = link_to('Edit', edit_team_event_path(@team, event), class: 'btn btn-secondary')
