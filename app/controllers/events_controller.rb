@@ -52,7 +52,7 @@ class EventsController < ApplicationController
 
   def event_parameters
     event_params = params.require(:event).permit(:name, :slug, :description, :meeting_url, :starts_at, :ends_at, :timezone,
-                                                 recurrences_attributes: [[:id, :interval, :frequency, :_destroy, :month_type, :ends_at, { week_days: [] }]],
+                                                 schedule_recurrences_attributes: [[:id, :interval, :frequency, :_destroy, :month_type, :ends_at, { week_days: [] }]],
                                                  schedule_exceptions_attributes: [[:id, :time, :_destroy]])
 
     # Makes sure to set the right timezone for the parameters, otherwise they get interpreted with UTC
@@ -60,7 +60,7 @@ class EventsController < ApplicationController
       event_params[:starts_at] = timezone.parse(event_params[:starts_at])
       event_params[:ends_at] = timezone.parse(event_params[:ends_at])
       
-      event_params[:recurrences_attributes]&.each do |index, recurrence|
+      event_params[:schedule_recurrences_attributes]&.each do |index, recurrence|
         recurrence[:ends_at] = timezone.parse(recurrence[:ends_at]) if recurrence[:ends_at]
       end
 

@@ -35,12 +35,12 @@
       .col
         %div= local_time(@event.starts_at, :long)
         %div= local_time(@event.ends_at, :long)
-    - if @event.recurrences.present?
+    - if @event.schedule_recurrences.present?
       .row.g-2.mb-2
         .col-auto
           %i.fas.fa-fw.fa-rotate-right
         .col
-          - @event.recurrences.each do |recurrence|
+          - @event.schedule_recurrences.each do |recurrence|
             %div= recurrence.rule.to_s
   .col-md-4
     - dated_occurrences = @event.occurrences.group_by { |o| o.starts_at.strftime("%B %Y") }

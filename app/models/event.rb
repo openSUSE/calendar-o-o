@@ -4,11 +4,11 @@ class Event < ApplicationRecord
   self.implicit_order_column = :starts_at
 
   belongs_to :team
-  has_many :recurrences, dependent: :destroy
+  has_many :schedule_recurrences, dependent: :destroy
   has_many :occurrences, class_name: 'EventOccurrence', dependent: :destroy
   has_many :schedule_exceptions, dependent: :destroy
   has_many :alarms
-  accepts_nested_attributes_for :recurrences,
+  accepts_nested_attributes_for :schedule_recurrences,
                                 allow_destroy: true
   accepts_nested_attributes_for :schedule_exceptions,
                                 allow_destroy: true
@@ -32,7 +32,7 @@ class Event < ApplicationRecord
 
   def schedule
     @schedule ||= IceCube::Schedule.new(starts_at, end_time: ends_at) do |s|
-      recurrences.each do |r|
+      schedule_recurrences.each do |r|
         s.add_recurrence_rule(r.rule)
       end
       schedule_exceptions.each do |x|
@@ -53,7 +53,7 @@ class Event < ApplicationRecord
     event.url = Rails.application.routes.url_helpers.team_event_url(team, self)
     event.color = Team::COLOR[team.color.to_sym]
     event.conference = meeting_url
-    recurrences.each do |r|
+    schedule_recurrences.each do |r|
       event.append_rrule r.rule.to_ical
     end
     schedule_exceptions.each do |x|

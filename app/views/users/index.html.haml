@@ -14,7 +14,7 @@
         = f.fields_for :roles do |fr|
           = fr.select :name, Role.names.keys, {}, class: 'form-select form-select-sm me-2'
           .form-destroy
-            = fr.check_box :_destroy, checked: fr.object.nil?, class: 'form-check-input', data: { action: 'recurrence-form#recurrence', 'recurrence-form-target': 'repeat' }
+            = fr.check_box :_destroy, checked: fr.object.nil?, class: 'form-check-input'
             = fr.label :_destroy, 'Remove role', class: 'form-check-disabled'
             = fr.label :_destroy, 'Restore role', class: 'form-check-enabled'
         = f.submit 'Update role', class: 'btn btn-primary btn-sm'
