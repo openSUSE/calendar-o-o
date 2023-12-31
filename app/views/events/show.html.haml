@@ -22,11 +22,11 @@
           %i.fas.fa-fw.fa-video
         .col
           = link_to @event.meeting_url, @event.meeting_url
-    = link_to(team_path(@event.team)) do
-      .row.g-2.mb-2
-        .col-auto
-          %i.fas.fa-fw.fa-user-group
-        .col
+    .row.g-2.mb-2
+      .col-auto
+        %i.fas.fa-fw.fa-user-group
+      .col
+        = link_to(team_path(@event.team)) do
           Run by
           = @event.team.name
     .row.g-2.mb-2
@@ -43,7 +43,7 @@
           - @event.schedule_recurrences.each do |recurrence|
             %div= recurrence.rule.to_s
   .col-md-4
-    - dated_occurrences = @event.occurrences.group_by { |o| o.starts_at.strftime("%B %Y") }
+    - dated_occurrences = @event.occurrences.where('starts_at > ?', Date.yesterday).order('starts_at ASC').group_by { |o| o.starts_at.strftime("%B %Y") }
     - dated_occurrences.each do |date, occurrences|
       .card.card-body.mb-3
         %h3= date

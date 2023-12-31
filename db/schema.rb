@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_30_145530) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_31_102243) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,14 +26,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_30_145530) do
     t.datetime "updated_at", null: false
     t.index ["alarmable_type", "alarmable_id"], name: "index_alarms_on_alarmable"
     t.index ["event_id"], name: "index_alarms_on_event_id"
-  end
-
-  create_table "event_exceptions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "time", null: false
-    t.uuid "event_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["event_id"], name: "index_event_exceptions_on_event_id"
   end
 
   create_table "event_occurrences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -60,7 +52,31 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_30_145530) do
     t.index ["team_id"], name: "index_events_on_team_id"
   end
 
-  create_table "recurrences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "roles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.integer "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_roles_on_user_id"
+  end
+
+  create_table "schedule_exceptions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "time", null: false
+    t.uuid "event_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_schedule_exceptions_on_event_id"
+  end
+
+  create_table "schedule_occurrences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "event_id", null: false
+    t.datetime "time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_schedule_occurrences_on_event_id"
+  end
+
+  create_table "schedule_recurrences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "event_id", null: false
     t.integer "interval", null: false
     t.integer "frequency", null: false
@@ -69,15 +85,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_30_145530) do
     t.datetime "ends_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["event_id"], name: "index_recurrences_on_event_id"
-  end
-
-  create_table "roles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id", null: false
-    t.integer "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_roles_on_user_id"
+    t.index ["event_id"], name: "index_schedule_recurrences_on_event_id"
   end
 
   create_table "teams", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -117,11 +125,12 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_30_145530) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "event_exceptions", "events"
   add_foreign_key "event_occurrences", "events"
   add_foreign_key "events", "teams"
-  add_foreign_key "recurrences", "events"
   add_foreign_key "roles", "users"
+  add_foreign_key "schedule_exceptions", "events"
+  add_foreign_key "schedule_occurrences", "events"
+  add_foreign_key "schedule_recurrences", "events"
   add_foreign_key "teams_users", "teams"
   add_foreign_key "teams_users", "users"
 end

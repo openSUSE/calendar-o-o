@@ -4,6 +4,7 @@ class Event < ApplicationRecord
   self.implicit_order_column = :starts_at
 
   belongs_to :team
+  has_many :schedule_occurrences, dependent: :destroy
   has_many :schedule_recurrences, dependent: :destroy
   has_many :occurrences, class_name: 'EventOccurrence', dependent: :destroy
   has_many :schedule_exceptions, dependent: :destroy
@@ -11,6 +12,8 @@ class Event < ApplicationRecord
   accepts_nested_attributes_for :schedule_recurrences,
                                 allow_destroy: true
   accepts_nested_attributes_for :schedule_exceptions,
+                                allow_destroy: true
+  accepts_nested_attributes_for :schedule_occurrences,
                                 allow_destroy: true
 
   validates :slug, format: { with: /\A[a-z0-9_]+\z/, message: 'Has to be alphanumeric with underscores'}
@@ -38,6 +41,9 @@ class Event < ApplicationRecord
       schedule_exceptions.each do |x|
         s.add_exception_time(x.time)
       end
+      schedule_occurrences.each do |o|
+        s.add_recurrence_time(o.time)
+      end
     end
   end
 
@@ -58,6 +64,9 @@ class Event < ApplicationRecord
     end
     schedule_exceptions.each do |x|
       event.append_exdate x.time
+    end
+    schedule_occurrences.each do |o|
+      event.append_rrule(SingleOccurrenceRule.new(o.time).rule.to_ical)
     end
 
     event
@@ -89,7 +98,8 @@ class Event < ApplicationRecord
 
   def destroy_old_occurrences
     occurrences.each do |o|
-      next if schedule.occurs_between?(o.starts_at, o.ends_at)
+      all_occurences = schedule.occurrences_between(o.starts_at, o.ends_at)
+      next if all_occurences.any? { |a| a.start_time == o.starts_at && a.end_time == o.ends_at }
 
       o.destroy
     end

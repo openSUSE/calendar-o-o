@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = [ "month", "week", "slug", "timezone", "startsAt" ]
-  static values = { recurrenceUrl: String, type: String }
+  static values = { recurrenceUrl: String, occurrenceUrl: String, type: String }
 
   monthTargetConnected(element) {
     this.setMonthValues(this.startsAtTarget.valueAsDate)
@@ -93,6 +93,28 @@ export default class extends Controller {
 
   lastDayOfMonth(date) {
     return new Date(date.getFullYear(), date.getMonth() + 1, 0)
+  }
+
+  async appendOccurrenceForm(event) {
+    var numberOfNodes = document.getElementById('occurrences').childElementCount;
+    event.preventDefault();
+    try {
+      const response = await fetch(`${this.occurrenceUrlValue}?index=${numberOfNodes}`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'text/vnd.turbo-stream.html'
+        }
+      });
+
+      if (response.ok) {
+        const turboStream = await response.text();
+        Turbo.renderStreamMessage(turboStream);
+      } else {
+        console.error('Failed to load Turbo Stream');
+      }
+    } catch (error) {
+      console.error('Error:', error)
+    }
   }
 
   async appendRecurrenceForm(event) {

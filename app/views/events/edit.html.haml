@@ -1,5 +1,5 @@
 %h1 Edit the event
-= form_with(model: @event, url: team_event_path(@team, @event), html: { data: { controller: 'event-form slug-form', 'event-form-recurrence-url-value': team_event_schedule_recurrences_path(@team, @event), 'event-form-type-value': 'edit' } }) do |f|
+= form_with(model: @event, url: team_event_path(@team, @event), html: { data: { controller: 'event-form slug-form', 'event-form-recurrence-url-value': team_event_schedule_recurrences_path(@team, @event), 'event-form-occurrence-url-value': team_event_schedule_occurrences_path(@team, @event), 'event-form-type-value': 'edit' } }) do |f|
   - if @event.errors.any?
     - @event.errors.full_messages.each do |msg|
       .alert.alert-danger
@@ -32,6 +32,12 @@
       - @event.schedule_recurrences.each_with_index do |recurrence, index|
         = render partial: 'schedule_recurrences/form', locals: { index:, recurrence: }
     %button.btn.btn-success.mb-3{ type: 'button', data: { action: 'event-form#appendRecurrenceForm' } } Add Recurrence rule
+  .mb-3
+    %h4 Additional dates
+    #occurrences
+      - @event.schedule_occurrences.each_with_index do |occurrence, index|
+        = render partial: 'schedule_occurrences/form', locals: { index:, occurrence: }
+    %button.btn.btn-success.mb-3{ type: 'button', data: { action: 'event-form#appendOccurrenceForm' } } Add a date
     - if @event.schedule_exceptions.present?
       %h4 Exceptions
       #exceptions

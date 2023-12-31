@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :events, only: %i[show new create edit update destroy], param: :slug do
       resources :event_occurrences, only: %i[destroy]
       resources :schedule_recurrences, only: %i[create]
+      resources :schedule_occurrences, only: %i[create]
       resources :alarms, only: %i[index new create edit update destroy]
     end
   end
