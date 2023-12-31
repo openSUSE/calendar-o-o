@@ -6,7 +6,7 @@ class EventOccurrence < ApplicationRecord
   belongs_to :event
 
   def exclude
-    event.exceptions << EventException.new(time: starts_at)
+    event.schedule_exceptions << ScheduleException.new(time: starts_at)
     event.save!
   end
 end

@@ -6,11 +6,11 @@ class Event < ApplicationRecord
   belongs_to :team
   has_many :recurrences, dependent: :destroy
   has_many :occurrences, class_name: 'EventOccurrence', dependent: :destroy
-  has_many :exceptions, class_name: 'EventException', dependent: :destroy
+  has_many :schedule_exceptions, dependent: :destroy
   has_many :alarms
   accepts_nested_attributes_for :recurrences,
                                 allow_destroy: true
-  accepts_nested_attributes_for :exceptions,
+  accepts_nested_attributes_for :schedule_exceptions,
                                 allow_destroy: true
 
   validates :slug, format: { with: /\A[a-z0-9_]+\z/, message: 'Has to be alphanumeric with underscores'}
@@ -35,7 +35,7 @@ class Event < ApplicationRecord
       recurrences.each do |r|
         s.add_recurrence_rule(r.rule)
       end
-      exceptions.each do |x|
+      schedule_exceptions.each do |x|
         s.add_exception_time(x.time)
       end
     end
@@ -56,7 +56,7 @@ class Event < ApplicationRecord
     recurrences.each do |r|
       event.append_rrule r.rule.to_ical
     end
-    exceptions.each do |x|
+    schedule_exceptions.each do |x|
       event.append_exdate x.time
     end
 

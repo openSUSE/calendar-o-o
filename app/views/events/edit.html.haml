@@ -32,10 +32,10 @@
       - @event.recurrences.each_with_index do |recurrence, index|
         = render partial: 'recurrences/form', locals: { index:, recurrence: }
     %button.btn.btn-success.mb-3{ type: 'button', data: { action: 'event-form#appendRecurrenceForm' } } Add Recurrence rule
-    - if @event.exceptions.present?
+    - if @event.schedule_exceptions.present?
       %h4 Exceptions
       #exceptions
-        = f.fields_for :exceptions do |fe|
+        = f.fields_for :schedule_exceptions do |fe|
           .row{ data: { controller: 'exception-form' } }
             .col
               .form-floating

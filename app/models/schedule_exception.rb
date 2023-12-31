@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class EventException < ApplicationRecord
+class ScheduleException < ApplicationRecord
   self.implicit_order_column = :time
 
   belongs_to :event
