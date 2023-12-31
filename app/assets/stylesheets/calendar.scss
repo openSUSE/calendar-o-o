@@ -53,6 +53,9 @@
   li {
     list-style: none;
     margin-left: 0;
+  }
+
+  .weekdays > li, .day-grid > li {
     background-color: var(--bs-body-bg);
   }
 
