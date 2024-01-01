@@ -1,8 +1,8 @@
 .row
   .col-md-8.mb-5
-    %h1.d-flex.justify-content-between
+    %h1.d-flex.justify-content-between.text-break.flex-wrap
       = @event.name
-      %span.buttons
+      %span.buttons.ms-2.text-end
         = render partial: 'shared/subscribe_links', locals: { url: team_event_url(@team, @event, format: :ics), button_class: 'btn btn-secondary' }
         - if user_signed_in?
           = link_to 'Alarms', team_event_alarms_path(@team, @event), class: 'btn btn-secondary'
@@ -50,8 +50,6 @@
         %ul
           - occurrences.each do |occurrence|
             %li
-              = local_time(occurrence.starts_at, :short)
-              \-
-              = local_time(occurrence.ends_at, :short)
+              = range_display(occurrence.starts_at, occurrence.ends_at)
               - if policy(@event).update?
                 = button_to 'Remove', team_event_event_occurrence_path(@team, @event, occurrence), method: :delete, form: { class: 'd-inline' }, class: 'btn btn-sm link-danger'

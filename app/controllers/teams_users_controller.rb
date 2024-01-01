@@ -9,7 +9,7 @@ class TeamsUsersController < ApplicationController
   end
 
   def create
-    @teams_user = authorize TeamsUser.new(teams_user_params)
+    @teams_user = authorize TeamsUser.new(teams_user_params.permit(:team_id).with_defaults(user_id: current_user.id, role: :member))
 
     if @teams_user.save
       redirect_to team_url(@team), notice: 'Team membership has been created!'
