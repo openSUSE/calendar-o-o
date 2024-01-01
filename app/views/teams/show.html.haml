@@ -12,8 +12,18 @@
           = link_to('Edit', edit_team_path(@team), class: 'btn btn-secondary')
         - if policy(@team).destroy?
           = button_to 'Remove', team_path(@team), method: :delete, form: { class: 'd-inline' }, class: 'btn btn-danger'
-    - @team.teams_users.joins(:user).order(User.arel_table['username']).order(TeamsUser.arel_table['role'].desc).each do |teams_user|
-      = render partial: 'teams_users/teams_user', locals: { teams_user: teams_user, team: @team }
+    - @team.teams_users.joins(:user).order(User.arel_table['username']).order(TeamsUser.arel_table['role'].desc).group_by(&:role).each do |role, teams_users|
+      - limit = 5
+      - if role == 'member' && teams_users.size > limit
+        - teams_users.first(limit).each do |teams_user|
+          = render partial: 'teams_users/teams_user', locals: { teams_user: teams_user, team: @team }
+        .collapse#teams-users-collapse
+          - teams_users[limit..-1].each do |teams_user|
+            = render partial: 'teams_users/teams_user', locals: { teams_user: teams_user, team: @team }
+        %button.btn.btn-link{ type: 'button', data: { 'bs-toggle': 'collapse', 'bs-target': '#teams-users-collapse' }, aria: { expanded: false, controls: 'teams-users-collapse' } } Expand/collapse members
+      - else
+        - teams_users.each do |teams_user|
+          = render partial: 'teams_users/teams_user', locals: { teams_user: teams_user, team: @team }
   .col-md-6
     - @team.events.each do |event|
       .card.card-body.mb-3.w-100
