@@ -13,14 +13,14 @@
           %li.filler.empty{ class: "span-#{8 - index.wday}" }
         %li.month{ class: index.day != index.wday ? "span-#{index.wday - 1}" : "span-7" }
           %h3.m-0.py-3.px-2= index.strftime("%B")
-      - hide = (@days_with_events.include?(index) && index > today) ? nil : 'empty'
+      - hide = (@days_with_events.include?(index) && index >= today) ? nil : 'empty'
       %li{ class: [index.strftime("%A").downcase, (today == index) ? 'today' : nil, hide] }
         .mx-2.pt-1
           = index.day
           %span.hidden-info= index.strftime("%B")
         - if @days_with_events.include?(index)
           %ul
-            - @event_occurrences.where('DATE(starts_at) = ?', index).each do |e|
+            - @event_occurrences.where('DATE(starts_at) >= ?', index.beginning_of_day).where('DATE(starts_at) < ?', (index + 1.day).beginning_of_day).each do |e|
               %li.p-0
                 = link_to(team_event_path(e.event.team, e.event), class: "badge text-bg-#{e.event.team.color} text-truncate w-100 text-decoration-none text-start", title: e.event.name) do
                   = local_time(e.starts_at, :time)

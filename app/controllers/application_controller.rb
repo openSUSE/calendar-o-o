@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery prepend: true
 
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_timezone
 
   def set_team
     @team = Team.find_by(slug: params[:team_slug] || params[:slug])
@@ -43,6 +44,12 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def set_timezone
+    return unless (timezone = request.cookies["timezone"])
+
+    Time.zone = ActiveSupport::TimeZone[timezone]
+  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up,

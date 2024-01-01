@@ -3,7 +3,7 @@
     %h1.d-flex.justify-content-between
       = @team.name
       .buttons.text-end
-        = link_to('Webcal', team_url(@team, format: :ics, protocol: :webcal), class: 'btn btn-secondary')
+        = render partial: 'shared/subscribe_links', locals: { url: team_url(@team, format: :ics), button_class: 'btn btn-secondary' }
         - if policy(TeamsUser.new(team: @team, user: current_user, role: :member)).create?
           = form_with(model: TeamsUser.new(), url: team_teams_users_path(@team), method: :post, class: 'd-inline') do |f|
             = f.hidden_field :team_id, value: @team.id

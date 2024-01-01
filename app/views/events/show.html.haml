@@ -3,7 +3,7 @@
     %h1.d-flex.justify-content-between
       = @event.name
       %span.buttons
-        = link_to('Webcal', team_event_url(@team, @event, format: :ics, protocol: :webcal), class: 'btn btn-secondary')
+        = render partial: 'shared/subscribe_links', locals: { url: team_event_url(@team, @event, format: :ics), button_class: 'btn btn-secondary' }
         - if user_signed_in?
           = link_to 'Alarms', team_event_alarms_path(@team, @event), class: 'btn btn-secondary'
         - if policy(@event).update?

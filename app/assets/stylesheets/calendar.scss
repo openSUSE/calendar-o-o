@@ -25,7 +25,6 @@
     grid-gap: var(--bs-border-width);
     background-color: var(--bs-secondary-bg);
     margin: 0 auto;
-    max-width: 64em;
   }
 
   @each $weekday in $weekdays {
@@ -36,7 +35,6 @@
 
   .month {
     grid-column-start: 1;
-    min-height: 10rem;
     display: flex;
     align-items: end;
   }

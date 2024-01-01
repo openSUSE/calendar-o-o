@@ -1,0 +1,12 @@
+- url_with_webcal = URI(url)
+- url_with_webcal.scheme = 'webcal'
+%span.dropdown
+  = link_to('Subscribe', '#', class: "#{button_class} dropdown-toggle", data: { 'bs-toggle': 'dropdown' })
+  %ul.dropdown-menu
+    %li.dropdown-item
+      = link_to('Webcal', url_with_webcal.to_s, class: 'dropdown-item')
+    %li.dropdown-item
+      = link_to('Google Calendar', "https://www.google.com/calendar/render?cid=#{url_with_webcal}", class: 'dropdown-item')
+    %li.dropdown-item{ data: { controller: 'clipboard' } }
+      %input.visually-hidden{ value: url, data: { 'clipboard-target': 'source' } }
+      = link_to('Copy iCalendar URL', url, class: 'dropdown-item', data: { action: 'clipboard#copy' })

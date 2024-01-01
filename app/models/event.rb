@@ -66,7 +66,7 @@ class Event < ApplicationRecord
       event.append_exdate x.time
     end
     schedule_occurrences.each do |o|
-      event.append_rrule(SingleOccurrenceRule.new(o.time).rule.to_ical)
+      event.append_rdate o.time
     end
 
     event

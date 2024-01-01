@@ -13,7 +13,7 @@
         %li.nav-item
           = link_to 'Teams', teams_path, class: 'nav-link'
         %li.nav-item
-          = link_to('Subscribe with Webcal', main_index_url(format: :ics, protocol: :webcal), class: 'nav-link')
+          = render partial: 'shared/subscribe_links', locals: { url: main_index_url(format: :ics), button_class: 'nav-link' }
       .navbar-nav
         - if user_signed_in?
           .dropdown.nav-item
