@@ -34,9 +34,9 @@ class ScheduleRecurrence < ApplicationRecord
     when 'nth_of_month'
       rule.day_of_month(event.starts_at.day)
     when 'nth_weekday_of_month'
-      rule.day_of_week(nth_weekday(event.starts_at))
+      rule.day_of_week({ event.starts_at.wday => [nth_weekday(event.starts_at)] })
     when 'nth_last_weekday_of_month'
-      rule.day_of_week(-nth_last_weekday(event.starts_at))
+      rule.day_of_week({ event.starts_at.wday => [-nth_last_weekday(event.starts_at)] })
     end
 
     rule

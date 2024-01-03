@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_event
-    @event = Event.find_by(slug: params[:event_slug] || params[:slug])
+    @event = @team.events.find_by(slug: params[:event_slug] || params[:slug])
 
     redirect_to team_events_url, alert: 'Event not found' unless @event
   end

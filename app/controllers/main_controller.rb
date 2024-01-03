@@ -3,7 +3,7 @@
 class MainController < ApplicationController
   def index
     # Only show the events that haven't ended yet
-    @event_occurrences = EventOccurrence.where('starts_at > ?', Date.today.monday).order(:starts_at)
+    @event_occurrences = EventOccurrence.where('starts_at > ?', Date.today.monday.beginning_of_day).order(:starts_at)
     @days_with_events = @event_occurrences.select(:starts_at).distinct.pluck(:starts_at).map(&:to_date)
 
     respond_to do |format|

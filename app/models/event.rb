@@ -87,7 +87,7 @@ class Event < ApplicationRecord
   def populate_occurrences
     destroy_old_occurrences
 
-    schedule.occurrences(Time.now + 63.days).each do |o|
+    schedule.occurrences(Time.now + 63.days)&.each do |o|
       next if occurrences.exists?(starts_at: o.start_time, ends_at: o.end_time)
 
       occurrences << EventOccurrence.new(starts_at: o.start_time, ends_at: o.end_time)
@@ -97,7 +97,7 @@ class Event < ApplicationRecord
   private
 
   def destroy_old_occurrences
-    occurrences.each do |o|
+    occurrences&.each do |o|
       all_occurences = schedule.occurrences_between(o.starts_at, o.ends_at)
       next if all_occurences.any? { |a| a.start_time == o.starts_at && a.end_time == o.ends_at }
 

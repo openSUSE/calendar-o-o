@@ -4,7 +4,7 @@ class TeamsController < ApplicationController
   before_action :set_team, only: %i[show edit update destroy]
 
   def index
-    @teams = Team.all
+    @teams = Team.all.order(:name)
     @teams = User.find_by(username: params[:user]).teams if params[:user].present? && User.exists?(username: params[:user])
   end
 

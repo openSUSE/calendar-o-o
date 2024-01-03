@@ -14,7 +14,7 @@ class TeamsUsersController < ApplicationController
     if @teams_user.save
       redirect_to team_url(@team), notice: 'Team membership has been created!'
     else
-      render :new, status: :unprocessable_entity
+      redirect_to team_url(@team), notice: "Team membership couldn't be created: #{@teams_user.errors.full_messages.to_sentence}"
     end
   end
 

@@ -20,7 +20,7 @@
           %span.hidden-info= index.strftime("%B")
         - if @days_with_events.include?(index)
           %ul
-            - @event_occurrences.where('DATE(starts_at) >= ?', index.beginning_of_day).where('DATE(starts_at) < ?', (index + 1.day).beginning_of_day).each do |e|
+            - @event_occurrences.where('starts_at >= ?', index.beginning_of_day).where('starts_at < ?', (index + 1.day).beginning_of_day).each do |e|
               %li.p-0
                 = link_to(team_event_path(e.event.team, e.event), class: "badge text-bg-#{e.event.team.color} text-truncate w-100 text-decoration-none text-start", title: e.event.name) do
                   = local_time(e.starts_at, :time)
