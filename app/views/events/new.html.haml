@@ -1,55 +1,75 @@
-%h1 Create an event
-= form_with(model: @event, url: team_events_path(@team), html: { data: { controller: 'event-form slug-form', 'event-form-type-value': 'new' } }) do |f|
+%h1= t('events.create_title')
+= form_with(model: @event, url: team_events_path(@team), html: { data: { controller: 'event-form slug-form',
+                                                                         'event-form-type-value': 'new' } }) do |f|
   - if @event.errors.any?
     - @event.errors.full_messages.each do |msg|
       .alert.alert-danger
         = msg
   .form-floating.mb-3
-    = f.text_field :name, required: true, class: 'form-control', placeholder: 'Name', data: { action: 'slug-form#prefillSlug' }
-    = f.label :name, 'Name'
+    = f.text_field :name, required: true, class: 'form-control', placeholder: t('events.name'),
+                          data: { action: 'slug-form#prefillSlug' }
+    = f.label :name, t('events.name')
   .form-floating.mb-3
-    = f.text_field :slug, required: true, class: 'form-control', placeholder: 'Event id', pattern: '^[a-z0-9_]+$', data: { 'slug-form-target': 'slug' }
-    = f.label :slug, 'Event id'
+    = f.text_field :slug, required: true, class: 'form-control', placeholder: t('events.slug'), pattern: '^[a-z0-9_-]+$',
+                          data: { 'slug-form-target': 'slug' }
+    = f.label :slug, t('events.slug')
   .form-floating.mb-3
-    = f.text_area :description, size: "70x5", class: 'form-control h-auto', placeholder: 'Description'
-    = f.label :description, 'Description'
+    = f.text_area :description, size: '70x5', class: 'form-control h-min mb-1', placeholder: t('events.description')
+    = f.label :description, t('events.description')
+    = link_to('https://www.markdownguide.org/cheat-sheet/', class: 'link-body-emphasis ms-1') do
+      %i.fab.fa-markdown
+      = t('events.markdown_formatting')
   .form-floating.mb-3
-    = f.text_field :meeting_url, class: 'form-control', placeholder: 'Meeting link'
-    = f.label :meeting_url, 'Meeting link'
+    = f.text_field :meeting_url, class: 'form-control', placeholder: t('events.meeting_url')
+    = f.label :meeting_url, t('events.meeting_url')
   .input-group.mb-3
     .form-floating
-      = f.datetime_local_field :starts_at, required: true, class: 'form-control', data: { action: 'event-form#date', 'event-form-target': 'startsAt' }
-      = f.label :starts_at, 'Starts At'
+      = f.datetime_local_field :starts_at, required: true, class: 'form-control',
+                                           data: { action: 'event-form#date',
+                                                   'event-form-target': 'startsAt' }
+      = f.label :starts_at, t('events.starts_at')
     .form-floating
       = f.datetime_local_field :ends_at, required: true, class: 'form-control'
-      = f.label :ends_at, 'Ends At'
+      = f.label :ends_at, t('events.ends_at')
     .form-floating
-      = f.time_zone_select :timezone, nil, { include_blank: false }, class: 'form-select', data: { 'event-form-target': 'timezone' }
-      = f.label :timezone, 'Timezone'
+      = f.time_zone_select :timezone, nil, { include_blank: false }, class: 'form-select',
+                                                                     data: { 'event-form-target': 'timezone' }
+      = f.label :timezone, t('events.timezone')
   .mb-3
     = f.fields_for :schedule_recurrences, ScheduleRecurrence.new do |fr|
       %div{ data: { controller: 'recurrence-form' } }
         .form-check
-          = fr.radio_button :_destroy, 'true', checked: true, class: 'form-check-input', data: { action: 'recurrence-form#recurrence', 'recurrence-form-target': 'repeat' }
-          = fr.label :_destroy_true, 'Once', class: 'form-check-label'
+          = fr.radio_button :_destroy, 'true', checked: true, class: 'form-check-input',
+                                               data: { action: 'recurrence-form#recurrence',
+                                                       'recurrence-form-target': 'repeat' }
+          = fr.label :_destroy_true, t('schedule_recurrences.once'), class: 'form-check-label'
         .row.g-1.mb-3.align-items-center
           .col-auto
             .form-check
-              = fr.radio_button :_destroy, 'false', checked: false, class: 'form-check-input', data: { action: 'recurrence-form#recurrence' }
-              = fr.label :_destroy_false, 'Repeat every', class: 'form-check-label'
-          .col-auto
-            = fr.number_field :interval, value: 1, class: 'form-control', data: { 'recurrence-form-target': 'interval' }
-          .col-auto
-            = fr.select :frequency, ScheduleRecurrence.frequencies.keys.to_h { |r| [r.pluralize, r] }, {}, class: 'form-select', data: { action: 'recurrence-form#recurrence', 'recurrence-form-target': 'frequency' }
+              = fr.radio_button :_destroy, 'false', checked: false, class: 'form-check-input mt-2',
+                                                    data: { action: 'recurrence-form#recurrence' }
+              - periods = ScheduleRecurrence.frequencies.keys.map { |p| t("period.#{p}") }
+              = fr.label :_destroy_false, t('schedule_recurrences.repeat_every_html',
+                                            number: fr.number_field(:interval,
+                                                                    value: 1, class: 'form-control mx-1',
+                                                                    data: { 'recurrence-form-target': 'interval' }),
+                                            period: fr.select(:frequency,
+                                                              periods, {},
+                                                              class: 'form-select mx-1',
+                                                              data: { action: 'recurrence-form#recurrence',
+                                                                      'recurrence-form-target': 'frequency' })),
+                         class: 'form-check-label input-group mb-3 align-items-center w-auto'
         .input-group.mb-3.d-none{ data: { 'event-form-target': 'week', 'recurrence-form-target': 'week' } }
-          = fr.collection_check_boxes :week_days, Date::DAYNAMES.each_with_index.to_a, :second, :first, include_hidden: false do |c|
+          = fr.collection_check_boxes :week_days,
+                                      Date::DAYNAMES.map { |d| t("dow.#{d.downcase}") }.each_with_index.to_a,
+                                      :second, :first, include_hidden: false do |c|
             .form-check.me-2
               = c.check_box class: 'form-check-input'
               = c.label class: 'form-check-label'
         .form-floating.mb-3.d-none{ data: { 'event-form-target': 'month', 'recurrence-form-target': 'month' } }
-          = fr.select :month_type, ScheduleRecurrence.month_types.keys.to_h { |r| [r.humanize, r] }, {}, class: 'form-control'
+          = fr.select :month_type, ScheduleRecurrence.month_types.keys.index_by(&:humanize), {}, class: 'form-control'
           = fr.label :month_type, 'Repeat on'
         .form-floating.d-none{ data: { 'recurrence-form-target': 'recurrenceEndsAt' } }
           = fr.datetime_local_field :ends_at, class: 'form-control'
-          = fr.label :ends_at, 'Do not repeat after'
-  = f.submit 'Create', class: 'btn btn-primary'
+          = fr.label :ends_at, t('schedule_recurrences.no_repeat_after')
+  = f.submit t('events.create'), class: 'btn btn-primary'

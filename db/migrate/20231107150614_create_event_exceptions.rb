@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Creates event exceptions table
 class CreateEventExceptions < ActiveRecord::Migration[7.1]
   def change
     create_table :event_exceptions, id: :uuid do |t|

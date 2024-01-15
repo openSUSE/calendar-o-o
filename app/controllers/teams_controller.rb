@@ -1,15 +1,21 @@
 # frozen_string_literal: true
 
+# Controller related to team actions
 class TeamsController < ApplicationController
   before_action :set_team, only: %i[show edit update destroy]
 
   def index
-    @teams = Team.all.order(:name)
-    @teams = User.find_by(username: params[:user]).teams if params[:user].present? && User.exists?(username: params[:user])
+    @teams = Team.order(:name)
+    return unless params[:user].present? && User.exists?(username: params[:user])
+
+    @teams = User.find_by(username: params[:user]).teams
   end
 
   def show
     authorize @team
+    username_table = User.arel_table['username']
+    role_table = TeamsUser.arel_table['role']
+    @teams_users_in_roles = @team.teams_users.joins(:user).order(username_table).order(role_table).group_by(&:role)
 
     respond_to do |format|
       format.html
@@ -21,25 +27,25 @@ class TeamsController < ApplicationController
     @team = authorize Team.new
   end
 
+  def edit
+    authorize @team
+  end
+
   def create
     @team = authorize Team.new(team_params)
 
     if @team.save
-      redirect_to team_url(@team), notice: 'Team has been created!'
+      redirect_to team_url(@team), notice: I18n.t('teams.created')
     else
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def edit
-    authorize @team
   end
 
   def update
     authorize @team
 
     if @team.update(team_params)
-      redirect_to team_url(@team), notice: 'Team has been updated!'
+      redirect_to team_url(@team), notice: I18n.t('teams.updated')
     else
       render :update, status: :unprocessable_entity
     end
@@ -49,7 +55,7 @@ class TeamsController < ApplicationController
     authorize @team
 
     @team.destroy
-    redirect_to teams_url, notice: 'Team removed'
+    redirect_to teams_url, notice: I18n.t('teams.removed')
   end
 
   private

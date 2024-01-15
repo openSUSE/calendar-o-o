@@ -6,7 +6,7 @@ import "bootstrap"
 import "channels"
 
 import LocalTime from "local-time"
-LocalTime.start()
+LocalTime.start();
 
 Notification.requestPermission().then(function (result) {});
 

@@ -1,0 +1,29 @@
+name: Run Lints
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  RAILS_ENV: test
+  BUNDLE_FORCE_RUBY_PLATFORM: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.2'
+        bundler-cache: true
+
+    - name: Run rubocop
+      run: bundler exec rubocop
+
+
+    - name: Run haml-lint
+      run: bundler exec haml-lint

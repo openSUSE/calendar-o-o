@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# This represents the roles users can have in the application
 class Role < ApplicationRecord
   self.implicit_order_column = :name
 
@@ -7,5 +8,5 @@ class Role < ApplicationRecord
   enum :name, [:admin]
 
   # Only one instance of name per user
-  validates_uniqueness_of :name, scope: :user_id
+  validates :name, uniqueness: { scope: :user_id }
 end

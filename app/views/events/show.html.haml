@@ -3,19 +3,24 @@
     %h1.d-flex.justify-content-between.text-break.flex-wrap
       = @event.name
       %span.buttons.ms-2.text-end
-        = render partial: 'shared/subscribe_links', locals: { url: team_event_url(@team, @event, format: :ics), button_class: 'btn btn-secondary' }
+        = render partial: 'shared/subscribe_links', locals: { url: team_event_url(@team, @event, format: :ics),
+                                                              button_class: 'btn btn-secondary' }
         - if user_signed_in?
-          = link_to 'Alarms', team_event_alarms_path(@team, @event), class: 'btn btn-secondary'
+          = link_to(t('events.alarms'), team_event_alarms_path(@team, @event),
+                    class: 'btn btn-secondary')
         - if policy(@event).update?
-          = link_to('Edit', edit_team_event_path(@team, @event), class: 'btn btn-secondary')
+          = link_to(t('events.edit'), edit_team_event_path(@team, @event),
+                    class: 'btn btn-secondary')
         - if policy(@event).destroy?
-          = button_to 'Remove', team_event_path(@team, @event), method: :delete, form: { class: 'd-inline' }, class: 'btn btn-danger'
+          = button_to t('events.remove'), team_event_path(@team, @event), method: :delete,
+                                                                          form: { class: 'd-inline' },
+                                                                          class: 'btn btn-danger'
     - if @event.description.present?
       .row.g-2.mb-2
         .col-auto
           %i.fas.fa-fw.fa-align-left
         .col
-          = @event.description
+          = markdownify(@event.description)
     - if @event.meeting_url.present?
       .row.g-2.mb-2
         .col-auto
@@ -26,9 +31,7 @@
       .col-auto
         %i.fas.fa-fw.fa-user-group
       .col
-        = link_to(team_path(@event.team)) do
-          Run by
-          = @event.team.name
+        = t('events.run_by_html', team: link_to(@event.team.name, team_path(@event.team)))
     .row.g-2.mb-2
       .col-auto
         %i.fas.fa-fw.fa-clock
@@ -43,8 +46,7 @@
           - @event.schedule_recurrences.each do |recurrence|
             %div= recurrence.rule.to_s
   .col-md-4
-    - dated_occurrences = @event.occurrences.where('starts_at > ?', Date.yesterday).order('starts_at ASC').group_by { |o| o.starts_at.strftime("%B %Y") }
-    - dated_occurrences.each do |date, occurrences|
+    - @dated_occurrences.each do |date, occurrences|
       .card.card-body.mb-3
         %h3= date
         %ul
@@ -52,4 +54,5 @@
             %li
               = range_display(occurrence.starts_at, occurrence.ends_at)
               - if policy(@event).update?
-                = button_to 'Remove', team_event_event_occurrence_path(@team, @event, occurrence), method: :delete, form: { class: 'd-inline' }, class: 'btn btn-sm link-danger'
+                = button_to t('event_occurrences.remove'), team_event_event_occurrence_path(@team, @event, occurrence),
+                            method: :delete, form: { class: 'd-inline' }, class: 'btn btn-sm link-danger'

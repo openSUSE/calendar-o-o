@@ -11,12 +11,16 @@ module ApplicationHelper
     date = local_time(from, :short)
     date += ' - '
 
-    if from.to_date == to.to_date
-      date += local_time(to, '%H:%M')
-    else
-      date += local_time(to, :short)
-    end
+    date += if from.to_date == to.to_date
+              local_time(to, '%H:%M')
+            else
+              local_time(to, :short)
+            end
 
     date
+  end
+
+  def markdownify(text)
+    Kramdown::Document.new(text, input: 'GFM').to_html.html_safe
   end
 end

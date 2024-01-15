@@ -1,11 +1,11 @@
-%h1 Users
+%h1= t('users.index_title')
 %ul.list-group
   - @users.each do |user|
     %li.list-group-item
       .info
         = user.name
         (#{user.username})
-      %h6.fw-bold Roles
+      %h6.fw-bold= t('users.roles')
       = form_with(model: user, html: { class: 'd-flex' }) do |f|
         - if user.errors.any?
           - user.errors.full_messages.each do |msg|
@@ -15,6 +15,6 @@
           = fr.select :name, Role.names.keys, {}, class: 'form-select form-select-sm me-2'
           .form-destroy
             = fr.check_box :_destroy, checked: fr.object.nil?, class: 'form-check-input'
-            = fr.label :_destroy, 'Remove role', class: 'form-check-disabled'
-            = fr.label :_destroy, 'Restore role', class: 'form-check-enabled'
-        = f.submit 'Update role', class: 'btn btn-primary btn-sm'
+            = fr.label :_destroy, t('users.remove_role'), class: 'form-check-disabled'
+            = fr.label :_destroy, t('users.restore_role'), class: 'form-check-enabled'
+        = f.submit t('users.update_role'), class: 'btn btn-primary btn-sm'

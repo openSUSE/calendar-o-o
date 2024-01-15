@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Alarms are responsible for keeping track when to notify of event occurances
 class Alarm < ApplicationRecord
   self.implicit_order_column = :created_at
 
@@ -17,18 +20,18 @@ class Alarm < ApplicationRecord
     calculate_trigger[1]
   end
 
-  def periods
-    ['hour', 'minute', 'second']
+  def self.periods
+    %w[hour minute second]
   end
 
   def period=(value)
-    return unless periods.include?(value)
+    return unless Alarm.periods.include?(value)
 
     @period = value
     calculate_into_trigger
   end
 
-  def alarm_time(time)
+  def alarm_time(_time)
     date - trigger.seconds
   end
 
@@ -48,9 +51,9 @@ class Alarm < ApplicationRecord
 
   def calculate_trigger
     return [nil, nil] unless trigger
-    return [ trigger / 3600, 'hour' ] if trigger % 3600 == 0
-    return [ trigger / 60, 'minute' ] if trigger % 60 == 0
+    return [trigger / 3600, 'hour'] if (trigger % 3600).zero?
+    return [trigger / 60, 'minute'] if (trigger % 60).zero?
 
-    [ trigger, 'second' ]
+    [trigger, 'second']
   end
 end

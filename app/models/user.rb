@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
+# User object
 class User < ApplicationRecord
   self.implicit_order_column = :username
 
-  has_many :teams_users
+  has_many :teams_users, dependent: :destroy
   has_many :teams, through: :teams_users
-  has_many :roles
-  has_many :alarms, as: :alarmable
+  has_many :roles, dependent: :destroy
+  has_many :alarms, as: :alarmable, dependent: :destroy
   accepts_nested_attributes_for :roles,
                                 allow_destroy: true
 

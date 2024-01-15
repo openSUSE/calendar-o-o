@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Creates recurrences table
 class CreateRecurrences < ActiveRecord::Migration[7.1]
   def change
     create_table :recurrences, id: :uuid do |t|

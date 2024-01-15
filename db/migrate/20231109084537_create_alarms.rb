@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Creates alarms table
 class CreateAlarms < ActiveRecord::Migration[7.1]
   def change
     create_table :alarms, id: :uuid do |t|

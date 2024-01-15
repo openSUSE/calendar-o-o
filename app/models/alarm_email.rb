@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
+# Type of alarm that's delivered over email
 class AlarmEmail < Alarm
-  validates_presence_of :email
+  validates :email, presence: true
 
   def action
     'EMAIL'

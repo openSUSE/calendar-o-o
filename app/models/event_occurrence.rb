@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# This is stored as quick access persistent cache to know when the event happens on the schedule
 class EventOccurrence < ApplicationRecord
   self.implicit_order_column = :starts_at
 

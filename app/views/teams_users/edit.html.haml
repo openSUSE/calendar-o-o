@@ -10,5 +10,5 @@
       .fw-bold.m-0= @teams_user.user.name
       = f.select :role, TeamsUser.roles.keys, {}, class: 'form-select form-select-sm'
     .col-auto
-      = f.submit 'Save', class: 'btn btn-sm btn-primary'
+      = f.submit t('teams_users.save'), class: 'btn btn-sm btn-primary'
       = link_to '', team_teams_user_path(@team, @teams_user), class: 'btn btn-close'

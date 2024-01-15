@@ -7,6 +7,8 @@
       %span.text-muted= teams_user.role
     .col-auto
       - if policy(teams_user).update?
-        = link_to 'Edit', edit_team_teams_user_path(team, teams_user), class: 'btn btn-sm btn-secondary'
+        = link_to t('teams_users.edit'), edit_team_teams_user_path(team, teams_user),
+                  class: 'btn btn-sm btn-secondary'
       - if policy(teams_user).destroy?
-        = button_to 'Remove', team_teams_user_path(team, teams_user), method: :delete, form: { class: 'd-inline' }, class: 'btn btn-sm btn-danger'
+        = button_to t('teams_users.remove'), team_teams_user_path(team, teams_user),
+                    method: :delete, form: { class: 'd-inline' }, class: 'btn btn-sm btn-danger'

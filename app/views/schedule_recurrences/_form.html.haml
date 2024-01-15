@@ -1,29 +1,35 @@
 = fields_for "event[schedule_recurrences_attributes][#{index}]", recurrence do |fr|
-  - if fr.object
-    = fr.hidden_field :id, value: fr.object.id
+  = fr.hidden_field(:id, value: fr.object.id) if fr.object
   .row{ data: { controller: 'recurrence-form' } }
     .col
       .row.g-1.mb-3.align-items-center
-        .col-auto
-          .form-check-label Repeat every
-        .col-auto
-          = fr.number_field :interval, class: 'form-control', data: { 'recurrence-form-target': 'interval' }
-        .col-auto
-          = fr.select :frequency, ScheduleRecurrence.frequencies.keys.to_h { |r| [r.pluralize, r] }, {}, class: 'form-select', data: { action: 'recurrence-form#recurrence', 'recurrence-form-target': 'frequency' }
+        .input-group.align-items-center
+          - periods = ScheduleRecurrence.frequencies.keys.map { |p| t("period.#{p}") }
+          = t('schedule_recurrences.repeat_every_html',
+              number: fr.number_field(:interval,
+                                      value: 1, class: 'form-control mx-1',
+                                      data: { 'recurrence-form-target': 'interval' }),
+              period: fr.select(:frequency,
+                                periods, {},
+                                class: 'form-select mx-1',
+                                data: { action: 'recurrence-form#recurrence',
+                                        'recurrence-form-target': 'frequency' }))
       .input-group.mb-3.d-none{ data: { 'event-form-target': 'week', 'recurrence-form-target': 'week' } }
-        = fr.collection_check_boxes :week_days, Date::DAYNAMES.each_with_index.to_a, :second, :first, include_hidden: false do |c|
+        = fr.collection_check_boxes :week_days, Date::DAYNAMES.each_with_index.to_a,
+                                    :second, :first, include_hidden: false do |c|
           .form-check.me-2
             = c.check_box class: 'form-check-input'
             = c.label class: 'form-check-label'
       .form-floating.mb-3.d-none{ data: { 'event-form-target': 'month', 'recurrence-form-target': 'month' } }
-        = fr.select :month_type, ScheduleRecurrence.month_types.keys.to_h { |r| [r.humanize, r] }, {}, class: 'form-control'
+        = fr.select :month_type, ScheduleRecurrence.month_types.keys.index_by(&:humanize), {}, class: 'form-control'
         = fr.label :month_type, 'Repeat on'
       .form-floating.d-none{ data: { 'recurrence-form-target': 'recurrenceEndsAt' } }
         = fr.datetime_local_field :ends_at, class: 'form-control'
-        = fr.label :ends_at, 'Do not repeat after'
+        = fr.label :ends_at, t('schedule_recurrences.no_repeat_after')
     .col-auto
       .form-destroy
-        = fr.check_box :_destroy, class: 'form-check-input', data: { action: 'recurrence-form#recurrence', 'recurrence-form-target': 'repeat' }
-        = fr.label :_destroy, 'Remove', class: 'form-check-disabled'
-        = fr.label :_destroy, 'Restore', class: 'form-check-enabled'
+        = fr.check_box :_destroy, class: 'form-check-input', data: { action: 'recurrence-form#recurrence',
+                                                                     'recurrence-form-target': 'repeat' }
+        = fr.label :_destroy, t('schedule_recurrences.remove'), class: 'form-check-disabled'
+        = fr.label :_destroy, t('schedule_recurrences.restore'), class: 'form-check-enabled'
     %hr.mt-3

@@ -2,14 +2,12 @@
   .container
     .d-flex.justify-content-between.align-items-center
       .copyright
-        Copyright &copy; openSUSE Contributors
+        = t(:copyright)
       .text-muted.text-align-end
-        All times on this page are in
-        = local_time(Time.zone.now, format: '%Z')
-        timezone
+        = t(:timezone_notice_html, timezone: local_time(Time.zone.now, format: '%Z'))
       %ul.list-inline.mb-0
         %li.list-inline-item
-          = link_to 'Source Code', 'https://github.com/openSUSE/calendar-o-o'
+          = link_to t(:source_code), 'https://github.com/openSUSE/calendar-o-o'
         %li.list-inline-item
-          = link_to 'License',
+          = link_to t(:license),
                     'https://github.com/openSUSE/calendar-o-o/blob/main/LICENSE'

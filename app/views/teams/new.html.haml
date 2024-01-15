@@ -1,18 +1,20 @@
-%h1 Create a team
+%h1= t('teams.create_title')
 = form_with(model: @team, html: { data: { controller: 'event-form slug-form' } }) do |f|
   - if @team.errors.any?
     - @team.errors.full_messages.each do |msg|
       .alert.alert-danger
         = msg
   .form-floating.mb-3
-    = f.text_field :name, required: true, class: 'form-control', placeholder: 'Name', data: { action: 'slug-form#prefillSlug' }
-    = f.label :name, 'Name'
+    = f.text_field :name, required: true, class: 'form-control', placeholder: t('events.name'),
+                          data: { action: 'slug-form#prefillSlug' }
+    = f.label :name, t('events.name')
   .form-floating.mb-3
-    = f.text_field :slug, required: true, class: 'form-control', placeholder: 'Team id', pattern: '^[a-z0-9_]+$', data: { 'slug-form-target': 'slug' }
-    = f.label :slug, 'Team id'
+    = f.text_field :slug, required: true, class: 'form-control', placeholder: t('events.slug'),
+                          pattern: '^[a-z0-9_-]+$', data: { 'slug-form-target': 'slug' }
+    = f.label :slug, t('events.slug')
   .input-group.mb-3
     = f.collection_radio_buttons :color, Team.colors.keys, :to_s, :humanize do |fc|
       .form-check.me-2
         = fc.radio_button required: true, class: "form-check-input text-bg-#{fc.object}"
         = fc.label class: 'form-check-label'
-  = f.submit 'Create', class: 'btn btn-primary'
+  = f.submit t('events.create'), class: 'btn btn-primary'

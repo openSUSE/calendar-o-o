@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Creates teams and users association
 class CreateTeamsUsers < ActiveRecord::Migration[7.1]
   def change
     create_table :teams_users, id: :uuid do |t|

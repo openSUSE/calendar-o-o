@@ -11,6 +11,6 @@ if (theme = Rails.configuration.site['theme'])
   Sprockets.prepend_path(path.join('assets/images'))
 end
 
-ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
-  html_tag.gsub('/class="(form-control|form-select|form-check-input)/','class="\\1 is-invalid').html_safe
+ActionView::Base.field_error_proc = proc do |html_tag, _instance|
+  html_tag.gsub('/class="(form-control|form-select|form-check-input)/', 'class="\\1 is-invalid').html_safe
 end

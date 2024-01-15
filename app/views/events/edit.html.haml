@@ -1,56 +1,71 @@
-%h1 Edit the event
-= form_with(model: @event, url: team_event_path(@team, @event), html: { data: { controller: 'event-form slug-form', 'event-form-recurrence-url-value': team_event_schedule_recurrences_path(@team, @event), 'event-form-occurrence-url-value': team_event_schedule_occurrences_path(@team, @event), 'event-form-type-value': 'edit' } }) do |f|
+%h1= t('events.edit_title')
+= form_with(model: @event, url: team_event_path(@team, @event),
+            html: { data: { controller: 'event-form slug-form',
+                            'event-form-recurrence-url-value': team_event_schedule_recurrences_path(@team, @event),
+                            'event-form-occurrence-url-value': team_event_schedule_occurrences_path(@team, @event),
+                            'event-form-type-value': 'edit' } }) do |f|
   - if @event.errors.any?
     - @event.errors.full_messages.each do |msg|
       .alert.alert-danger
         = msg
   .form-floating.mb-3
-    = f.text_field :name, required: true, class: 'form-control', placeholder: 'Name', data: { action: 'slug-form#prefillSlug' }
-    = f.label :name, 'Name'
+    = f.text_field :name, required: true, class: 'form-control', placeholder: t('events.name'),
+                          data: { action: 'slug-form#prefillSlug' }
+    = f.label :name, t('events.name')
   .form-floating.mb-3
-    = f.text_field :slug, required: true, class: 'form-control', placeholder: 'Event id', pattern: '^[a-z0-9_]+$', data: { 'slug-form-target': 'slug' }
-    = f.label :slug, 'Event id'
+    = f.text_field :slug, required: true, class: 'form-control', placeholder: t('events.slug'),
+                          pattern: '^[a-z0-9_-]+$', data: { 'slug-form-target': 'slug' }
+    = f.label :slug, t('events.slug')
   .form-floating.mb-3
-    = f.text_area :description, size: "70x5", class: 'form-control h-auto', placeholder: 'Description'
-    = f.label :description, 'Description'
+    = f.text_area :description, class: 'form-control h-min mb-1', placeholder: t('events.description')
+    = f.label :description, t('events.description')
+    = link_to('https://www.markdownguide.org/cheat-sheet/', class: 'link-body-emphasis ms-1') do
+      %i.fab.fa-markdown
+      = t('events.markdown_formatting')
   .form-floating.mb-3
-    = f.text_field :meeting_url, class: 'form-control', placeholder: 'Meeting link'
-    = f.label :meeting_url, 'Meeting link'
+    = f.text_field :meeting_url, class: 'form-control', placeholder: t('events.meeting_url')
+    = f.label :meeting_url, t('events.meeting_url')
   .input-group.mb-3
     .form-floating
-      = f.datetime_local_field :starts_at, required: true, class: 'form-control', data: { action: 'event-form#date', 'event-form-target': 'startsAt' }
-      = f.label :starts_at, 'Starts At'
+      = f.datetime_local_field :starts_at, required: true, class: 'form-control',
+                                           data: { action: 'event-form#date',
+                                                   'event-form-target': 'startsAt' }
+      = f.label :starts_at, t('events.starts_at')
     .form-floating
       = f.datetime_local_field :ends_at, required: true, class: 'form-control'
-      = f.label :ends_at, 'Ends At'
+      = f.label :ends_at, t('events.ends_at')
     .form-floating
       = f.time_zone_select :timezone, nil, { include_blank: false }, class: 'form-select'
-      = f.label :timezone, 'Timezone'
+      = f.label :timezone, t('events.timezone')
   .mb-3
-    %h4 Recurrence rules
+    %h4= t('schedule_recurrences.rules')
     #recurrences
       - @event.schedule_recurrences.each_with_index do |recurrence, index|
         = render partial: 'schedule_recurrences/form', locals: { index:, recurrence: }
-    %button.btn.btn-success.mb-3{ type: 'button', data: { action: 'event-form#appendRecurrenceForm' } } Add Recurrence rule
+    %button.btn.btn-success.mb-3{ type: 'button',
+                                  data: { action: 'event-form#appendRecurrenceForm' } }
+      = t('schedule_recurrences.add_rule')
   .mb-3
-    %h4 Additional dates
+    %h4= t('schedule_occurrences.dates')
     #occurrences
       - @event.schedule_occurrences.each_with_index do |occurrence, index|
         = render partial: 'schedule_occurrences/form', locals: { index:, occurrence: }
-    %button.btn.btn-success.mb-3{ type: 'button', data: { action: 'event-form#appendOccurrenceForm' } } Add a date
+    %button.btn.btn-success.mb-3{ type: 'button',
+                                  data: { action: 'event-form#appendOccurrenceForm' } }
+      = t('schedule_occurrences.add_date')
     - if @event.schedule_exceptions.present?
-      %h4 Exceptions
+      %h4= t('schedule_exceptions.exceptions')
       #exceptions
         = f.fields_for :schedule_exceptions do |fe|
           .row{ data: { controller: 'exception-form' } }
             .col
               .form-floating
                 = fe.datetime_local_field :time, class: 'form-control'
-                = fe.label :time, 'Time'
+                = fe.label :time, t('schedule_exceptions.time')
             .col-auto
               .form-destroy
                 = fe.check_box :_destroy, class: 'form-check-input'
-                = fe.label :_destroy, 'Remove', class: 'form-check-disabled'
-                = fe.label :_destroy, 'Restore', class: 'form-check-enabled'
+                = fe.label :_destroy, t('schedule_exceptions.remove'), class: 'form-check-disabled'
+                = fe.label :_destroy, t('schedule_exceptions.restore'), class: 'form-check-enabled'
             %hr.mt-3
-  = f.submit 'Save', class: 'btn btn-primary'
+  = f.submit t('events.save'), class: 'btn btn-primary'

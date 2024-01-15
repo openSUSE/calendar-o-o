@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Policy that ensures only certain people can create, manage and see team and user association
 class TeamsUserPolicy < ApplicationPolicy
   def show?
     true

@@ -28,4 +28,171 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  copyright: 'Copyright © openSUSE Contributors'
+  timezone_notice_html: "All times on this page are in %{timezone} timezone"
+  source_code: 'Source Code'
+  license: 'License'
+  toggle_nav: 'Toggle navigation'
+  teams_nav: 'Teams'
+  my_teams: 'My teams'
+  manage_users: 'Manage users'
+  log_out: 'Log out'
+  sign_in: 'Sign in'
+  close: 'Close'
+  sign_up: 'Sign up'
+  sign_up_to: "Sign up to %{provider}"
+  sign_in_to: "Log in with %{provider}"
+  or: 'or'
+  username: 'Username'
+  password: 'Password'
+  remember_me: 'Remember me'
+  forgot_password: 'Forgot your password?'
+  no_confirmation_instructions: "Didn't receive confirmation instructions?"
+  no_unlock_instructions: "Didn't receive unlock instructions?"
+  subscribe: 'Subscribe'
+  webcal: 'Webcal'
+  google_calendar: 'Google Calendar'
+  copy_ical: 'Copy iCalendar URL'
+  log_in: 'Log in'
+  alarms:
+    not_found: 'Alarm not found'
+    created: 'Alarm has been created!'
+    create_team: 'Create team alarm'
+    create: 'Create alarm'
+    updated: 'Alarm has been updated!'
+    removed: 'Alarm removed'
+    remove: 'Remove'
+    email_for: "Email for %{email}"
+    notification_for: "Notification for %{notifiable}"
+    description: 'Description'
+    triggered: "Triggered %{amount} before the event"
+    type: 'Type'
+    email: 'Email'
+    notification: 'Notification'
+    email_address: 'Email address'
+    trigger_html: "Trigger %{number} %{period} before the event"
+    description: 'Description'
+    save: 'Save'
+    create: 'Create'
+    create_title: 'Create an alarm'
+    edit_title: 'Modify an alarm'
+    index_title_html: "Alarms for %{event}"
+  teams:
+    not_found: 'Team not found'
+    created: 'Team has been created!'
+    updated: 'Team has been updated!'
+    removed: 'Team removed'
+    edit_title: 'Edit the team'
+    name: 'Name'
+    slug: 'Slug'
+    save: 'Save'
+    new: 'New Team'
+    index_title: 'Teams'
+    create: 'Create'
+    create_title: 'Create a new team'
+    join: 'Join the team'
+    edit: 'Edit'
+    remove: 'Remove'
+  events:
+    not_found: 'Event not found'
+    created: 'Event has been created!'
+    updated: 'Event has been updated!'
+    removed: 'Event removed'
+    name: 'Name'
+    slug: 'Slug'
+    description: 'Description'
+    meeting_url: 'Meeting Link'
+    starts_at: 'Starts at'
+    ends_at: 'Ends at'
+    timezone: 'Timezone'
+    markdown_formatting: 'Supports Markdown Formatting'
+    save: 'Save'
+    create: 'Create'
+    create_title: Create an event
+    edit_title: Edit the event
+    remove: 'Remove'
+    alarms: 'Alarms'
+    edit: 'Edit'
+    run_by_html: "Run by the %{team}"
+  schedule_recurrences:
+    rules: 'Recurrence rules'
+    add_rule: 'Add Recurrence rule'
+    once: 'Once'
+    repeat_every_html: "Repeat every %{number} %{period}"
+    no_repeat_after: 'Do not repeat after'
+    remove: 'Remove'
+    restore: 'Restore'
+  schedule_occurrences:
+    dates: 'Additional dates'
+    add_date: 'Add a date'
+    remove: 'Remove'
+    restore: 'Restore'
+    time: 'Occurrence Time'
+  schedule_exceptions:
+    exceptions: 'Exceptions'
+    time: 'Time'
+    remove: 'Remove'
+    restore: 'Restore'
+  users:
+    not_found: 'User not found'
+    updated: 'User has been updated!'
+    index_title: 'Users'
+    roles: 'Roles'
+    remove_role: 'Remove role'
+    restore_role: 'Restore role'
+    update_role: 'Update role'
+  event_occurrences:
+    not_found: 'Event occurrence not found'
+    removed: 'Event occurrence removed'
+    remove: 'Remove'
+  teams_users:
+    not_found: 'Team membership not found'
+    created: 'Team membership has been created!'
+    create_failed: "Team membership couldn't be created: %{errors}"
+    updated: 'Team membership has been updated!'
+    update_failed: "Team membership couldn't be updated: %{errors}"
+    removed: 'Team membership removed'
+    toggle: 'Expand/collapse members'
+    save: 'Save'
+    edit: 'Edit'
+    remove: 'Remove'
+  format_validation:
+    alphanumeric_with_dashes: 'has to be alphanumeric with dashes'
+  period:
+    second: 'second'
+    minute: 'minute'
+    hour: 'hour'
+    day: 'day'
+    week: 'week'
+    month: 'month'
+    year: 'year'
+  dow:
+    sunday: 'Sunday'
+    monday: 'Monday'
+    tuesday: 'Tuesday'
+    wednesday: 'Wednesday'
+    thursday: 'Thursday'
+    friday: 'Friday'
+    saturday: 'Saturday'
+  interval:
+    second:
+      one: 1 second
+      other: "%{count} seconds"
+    minute:
+      one: 1 minute
+      other: "%{count} minutes"
+    hour:
+      one: 1 hour
+      other: "%{count} hours"
+    day:
+      one: 1 day
+      other: "%{count} days"
+    week:
+      one: 1 week
+      other: "%{count} weeks"
+    month:
+      one: 1 month
+      other: "%{count} months"
+    year:
+      one: 1 year
+      other: "%{count} years"

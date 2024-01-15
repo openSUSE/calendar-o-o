@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Adds roles table
 class CreateRoles < ActiveRecord::Migration[7.1]
   def change
     create_table :roles, id: :uuid do |t|

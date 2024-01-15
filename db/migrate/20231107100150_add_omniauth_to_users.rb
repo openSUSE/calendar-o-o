@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
+# Adds omniauth handling to users table
 class AddOmniauthToUsers < ActiveRecord::Migration[7.1]
   def change
-    add_column :users, :provider, :string
-    add_column :users, :uid, :string
-    add_column :users, :name, :string, null: false
-    add_column :users, :username, :string, null: false
-    add_index :users, :username, unique: true
+    change_table :users, bulk: true do |t|
+      t.string :provider
+      t.string :uid
+      t.string :name, null: false
+      t.string :username, null: false
+      t.index :username, unique: true
+    end
   end
 end

@@ -1,28 +1,32 @@
 %h1.text-center= Rails.configuration.site[:tagline]
 .calendar
-  - today = Date.today
+  - today = Time.zone.today
   - monday = today.monday
   %ul.weekdays
     - monday.upto(monday + 6).each do |index|
       %li
-        .mx-2= index.strftime("%A")
+        .mx-2= t("dow.#{index.strftime('%A').downcase}")
   %ul.day-grid
     - monday.upto(monday + 62).each do |index|
       - if index.day == 1
         - if index.day != index.wday
           %li.filler.empty{ class: "span-#{8 - index.wday}" }
-        %li.month{ class: index.day != index.wday ? "span-#{index.wday - 1}" : "span-7" }
-          %h3.m-0.py-3.px-2= index.strftime("%B")
-      - hide = (@days_with_events.include?(index) && index >= today) ? nil : 'empty'
-      %li{ class: [index.strftime("%A").downcase, (today == index) ? 'today' : nil, hide] }
+        %li.month{ class: index.day == index.wday ? 'span-7' : "span-#{index.wday - 1}" }
+          %h3.m-0.py-3.px-2= index.strftime('%B')
+      - hide = @days_with_events.include?(index) && index >= today ? nil : 'empty'
+      %li{ class: [index.strftime('%A').downcase, today == index ? 'today' : nil, hide] }
         .mx-2.pt-1
           = index.day
-          %span.hidden-info= index.strftime("%B")
+          %span.hidden-info= index.strftime('%B')
         - if @days_with_events.include?(index)
           %ul
-            - @event_occurrences.where('starts_at >= ?', index.beginning_of_day).where('starts_at < ?', (index + 1.day).beginning_of_day).each do |e|
+            - tday_zero = index.beginning_of_day
+            - tmrw_zero = (index + 1.day).beginning_of_day
+            - @event_occurrences.where('starts_at >= ?', tday_zero).where('starts_at < ?', tmrw_zero).find_each do |e|
               %li.p-0
-                = link_to(team_event_path(e.event.team, e.event), class: "badge text-bg-#{e.event.team.color} text-truncate w-100 text-decoration-none text-start", title: e.event.name) do
+                - badge_cls = "badge text-bg-#{e.event.team.color} text-truncate w-100 text-decoration-none text-start"
+                = link_to(team_event_path(e.event.team, e.event),
+                          class: badge_cls, title: e.event.name) do
                   = local_time(e.starts_at, :time)
                   %span.hidden-info
                     \-

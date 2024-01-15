@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Policy that ensures only certain people can create, manage and see events
 class EventPolicy < ApplicationPolicy
   def show?
     true

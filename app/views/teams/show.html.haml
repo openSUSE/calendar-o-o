@@ -3,27 +3,29 @@
     %h1.d-flex.justify-content-between.text-break.flex-wrap
       = @team.name
       .buttons.ms-2.text-end
-        = render partial: 'shared/subscribe_links', locals: { url: team_url(@team, format: :ics), button_class: 'btn btn-secondary' }
+        = render partial: 'shared/subscribe_links', locals: { url: team_url(@team, format: :ics),
+                                                              button_class: 'btn btn-secondary' }
         - if policy(TeamsUser.new(team: @team, user: current_user, role: :member)).create?
-          = form_with(model: TeamsUser.new(), url: team_teams_users_path(@team), method: :post, class: 'd-inline') do |f|
+          = form_with(model: TeamsUser.new, url: team_teams_users_path(@team), method: :post, class: 'd-inline') do |f|
             = f.hidden_field :team_id, value: @team.id
-            = f.submit 'Join the Team', class: 'btn btn-primary'
-        - if policy(@team).update?
-          = link_to('Edit', edit_team_path(@team), class: 'btn btn-secondary')
+            = f.submit t('teams.join'), class: 'btn btn-primary'
+        = link_to(t('teams.edit'), edit_team_path(@team), class: 'btn btn-secondary') if policy(@team).update?
         - if policy(@team).destroy?
-          = button_to 'Remove', team_path(@team), method: :delete, form: { class: 'd-inline' }, class: 'btn btn-danger'
-    - @team.teams_users.joins(:user).order(User.arel_table['username']).order(TeamsUser.arel_table['role'].desc).group_by(&:role).each do |role, teams_users|
+          = button_to(t('teams.remove'), team_path(@team), method: :delete, form: { class: 'd-inline' },
+                                                           class: 'btn btn-danger')
+    - @teams_users_in_roles.each do |role, teams_users|
       - limit = 5
       - if role == 'member' && teams_users.size > limit
         - teams_users.first(limit).each do |teams_user|
-          = render partial: 'teams_users/teams_user', locals: { teams_user: teams_user, team: @team }
+          = render partial: 'teams_users/teams_user', locals: { teams_user:, team: @team }
         .collapse#teams-users-collapse
-          - teams_users[limit..-1].each do |teams_user|
-            = render partial: 'teams_users/teams_user', locals: { teams_user: teams_user, team: @team }
-        %button.btn.btn-link{ type: 'button', data: { 'bs-toggle': 'collapse', 'bs-target': '#teams-users-collapse' }, aria: { expanded: false, controls: 'teams-users-collapse' } } Expand/collapse members
+          - teams_users[limit..].each do |teams_user|
+            = render partial: 'teams_users/teams_user', locals: { teams_user:, team: @team }
+        %button.btn.btn-link{ type: 'button', data: { 'bs-toggle': 'collapse', 'bs-target': '#teams-users-collapse' },
+                              aria: { expanded: false, controls: 'teams-users-collapse' } }= t('teams_users.toggle')
       - else
         - teams_users.each do |teams_user|
-          = render partial: 'teams_users/teams_user', locals: { teams_user: teams_user, team: @team }
+          = render partial: 'teams_users/teams_user', locals: { teams_user:, team: @team }
   .col-md-6
     - @team.events.each do |event|
       .card.card-body.mb-3.w-100
@@ -34,8 +36,11 @@
               = range_display(schedule.start_time, schedule.end_time)
           .col-auto
             - if policy(event).update?
-              = link_to('Edit', edit_team_event_path(@team, event), class: 'btn btn-secondary')
+              = link_to(t('events.edit'), edit_team_event_path(@team, event),
+                        class: 'btn btn-secondary')
             - if policy(event).destroy?
-              = button_to 'Remove', team_event_path(@team, event), method: :delete, form: { class: 'd-inline' }, class: 'btn btn-danger'
+              = button_to t('events.remove'), team_event_path(@team, event),
+                          method: :delete, form: { class: 'd-inline' }, class: 'btn btn-danger'
     - if policy(Event.new(team: @team)).create?
-      = link_to('New event', new_team_event_path(@team), class: 'btn btn-primary mx-auto')
+      = link_to(t('teams.new_event'), new_team_event_path(@team),
+                class: 'btn btn-primary mx-auto')

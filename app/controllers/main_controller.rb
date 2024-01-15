@@ -1,9 +1,17 @@
 # frozen_string_literal: true
 
+# Controller related to the main page actions
 class MainController < ApplicationController
+  ICALENDAR_DETAILS = {
+    description: Rails.configuration.site[:tagline],
+    url: Rails.application.routes.url_helpers.root_url,
+    source: Rails.application.routes.url_helpers.main_index_url(format: :ics)
+  }.freeze
+
   def index
     # Only show the events that haven't ended yet
-    @event_occurrences = EventOccurrence.where('starts_at > ?', Date.today.monday.beginning_of_day).order(:starts_at)
+    @event_occurrences = EventOccurrence.where('starts_at > ?',
+                                               Time.zone.today.monday.beginning_of_day).order(:starts_at)
     @days_with_events = @event_occurrences.select(:starts_at).distinct.pluck(:starts_at).map(&:to_date)
 
     respond_to do |format|
@@ -12,19 +20,22 @@ class MainController < ApplicationController
     end
   end
 
+  private
+
   def icalendar
-    cal = Icalendar::Calendar.new
-    cal.description = Rails.configuration.site[:tagline]
-    cal.url = root_url
-    cal.source = main_index_url(format: :ics)
+    Icalendar::Calendar.new.tap do |ical|
+      ICALENDAR_DETAILS.each do |prop, value|
+        ical.send("#{prop}=", value)
+      end
 
-    Event.all.select(:timezone).distinct.pluck(:timezone).each do |timezone|
-      cal.add_timezone ActiveSupport::TimeZone.find_tzinfo(timezone).ical_timezone Time.now
+      add_timezones_to_icalendar(ical)
+      Event.find_each { |event| ical.add_event(event.ievent) }
     end
+  end
 
-    Event.all.each do |event|
-      cal.add_event event.ievent
+  def add_timezones_to_icalendar(ical)
+    Event.select(:timezone).distinct.pluck(:timezone).each do |timezone|
+      ical.add_timezone(ActiveSupport::TimeZone.find_tzinfo(timezone).ical_timezone(Time.zone.now))
     end
-    cal
   end
 end

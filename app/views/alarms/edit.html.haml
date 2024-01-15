@@ -1,5 +1,6 @@
-%h1 Modify an alarm
-= form_with(model: @alarm, url: team_event_alarm_path(@team, @event, @alarm), html: { data: { controller: 'alarm-form' } }) do |f|
+%h1= t('alarms.edit_title')
+= form_with(model: @alarm, url: team_event_alarm_path(@team, @event, @alarm),
+            html: { 'data-controller': 'alarm-form' }) do |f|
   - if @alarm.errors.any?
     - @alarm.errors.full_messages.each do |msg|
       .alert.alert-danger
@@ -8,17 +9,18 @@
   = f.hidden_field :alarmable_id, value: params[:team] ? @team.id : current_user.id
   .input-group.mb-3
     .form-floating
-      = f.select :type, { Email: 'AlarmEmail', Notification: 'AlarmNotification' }, {}, class: 'form-select', placeholder: 'Type', data: { action: 'alarm-form#toggleEmail', 'alarm-form-target': 'type' }
-      = f.label :type, 'Type'
+      = f.select :type, { t('alarms.email') => 'AlarmEmail', t('alarms.notification') => 'AlarmNotification' },
+                 {}, class: 'form-select', placeholder: t('alarms.type'),
+                     data: { action: 'alarm-form#toggleEmail', 'alarm-form-target': 'type' }
+      = f.label :type, t('alarms.type')
     .form-floating{ data: { 'alarm-form-target': 'email' } }
-      = f.email_field :email, class: 'form-control', placeholder: 'Email address'
-      = f.label :email, 'Email address'
-  .row.g-2.mb-3.align-items-center
-    .col-auto= f.label :interval, 'Trigger'
-    .col-auto= f.number_field :interval, class: 'form-control'
-    .col-auto= f.select :period, f.object.periods, {}, class: 'form-select'
-    .col-auto= f.label :period, 'before the event'
+      = f.email_field :email, class: 'form-control', placeholder: t('alarms.email_address')
+      = f.label :email, t('alarms.email_address')
+  .input-group.mb-3.align-items-center.w-auto
+    = t('alarms.trigger_html', number: f.number_field(:interval, class: 'form-control mx-1'),
+                               period: f.select(:period, Alarm.periods.map { |p| t("period.#{p}") },
+                                                {}, class: 'form-select mx-1'))
   .form-floating.mb-3
-    = f.text_area :description, class: 'form-control h-auto', placeholder: 'Description'
-    = f.label :description, 'Description'
-  = f.submit 'Save', class: 'btn btn-primary'
+    = f.text_area :description, class: 'form-control h-min', placeholder: t('alarms.description')
+    = f.label :description, t('alarms.description')
+  = f.submit t('alarms.save'), class: 'btn btn-primary'

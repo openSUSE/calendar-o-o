@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Create schedule occurrences table
 class CreateScheduleOccurrences < ActiveRecord::Migration[7.1]
   def change
     create_table :schedule_occurrences, id: :uuid do |t|

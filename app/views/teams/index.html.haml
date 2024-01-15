@@ -1,8 +1,7 @@
-%h1 Teams
+%h1= t('teams.index_title')
 .row
   - @teams.each do |team|
     .col-md-3.mb-3
       = link_to team_path(team), class: "card card-body text-bg-#{team.color} text-decoration-none" do
         %h4= team.name
-- if policy(Team.new).create?
-  = link_to 'New Team', new_team_path, class: 'btn btn-success'
+= link_to(t('teams.new'), new_team_path, class: 'btn btn-success') if policy(Team.new).create?
