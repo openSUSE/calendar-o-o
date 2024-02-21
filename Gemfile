@@ -78,7 +78,7 @@ gem 'font-awesome-sass', '~> 6.4'
 gem 'haml-rails', '~> 2.0'
 
 # Displaying user's time instead of server's time
-gem 'local_time', '~> 2.1'
+gem 'local_time', '~> 3.0'
 
 # Running recurring tasks
 gem 'clockwork'
