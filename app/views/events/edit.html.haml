@@ -1,6 +1,6 @@
 %h1= t('events.edit_title')
 = form_with(model: @event, url: team_event_path(@team, @event),
-            html: { data: { controller: 'event-form slug-form',
+            html: { data: { controller: 'event-form',
                             'event-form-recurrence-url-value': team_event_schedule_recurrences_path(@team, @event),
                             'event-form-occurrence-url-value': team_event_schedule_occurrences_path(@team, @event),
                             'event-form-type-value': 'edit' } }) do |f|
@@ -9,12 +9,11 @@
       .alert.alert-danger
         = msg
   .form-floating.mb-3
-    = f.text_field :name, required: true, class: 'form-control', placeholder: t('events.name'),
-                          data: { action: 'slug-form#prefillSlug' }
+    = f.text_field :name, required: true, class: 'form-control', placeholder: t('events.name')
     = f.label :name, t('events.name')
   .form-floating.mb-3
     = f.text_field :slug, required: true, class: 'form-control', placeholder: t('events.slug'),
-                          pattern: '^[a-z0-9_-]+$', data: { 'slug-form-target': 'slug' }
+                          pattern: '^[a-z0-9_-]+$'
     = f.label :slug, t('events.slug')
   .form-floating.mb-3
     = f.text_area :description, class: 'form-control h-min mb-1', placeholder: t('events.description')

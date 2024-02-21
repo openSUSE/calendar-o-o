@@ -1,3 +1,6 @@
 linters:
   LineLength:
     max: 120
+
+exclude:
+  - 'vendor/bundle/**/*'

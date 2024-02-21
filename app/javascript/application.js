@@ -18,7 +18,9 @@ function timezone() {
 }
 
 function set_timezone() {
-  document.cookie = `timezone=${Intl.DateTimeFormat().resolvedOptions().timeZone}; SameSite=Lax; Secure`;
+  let secure = '';
+  if ('https:' == document.location.protocol) { secure = ' Secure'; }
+  document.cookie = `timezone=${Intl.DateTimeFormat().resolvedOptions().timeZone}; SameSite=Lax;${secure}`;
 }
 
 if (timezone() !== Intl.DateTimeFormat().resolvedOptions().timeZone) {

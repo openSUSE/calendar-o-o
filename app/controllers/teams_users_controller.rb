@@ -14,7 +14,7 @@ class TeamsUsersController < ApplicationController
   end
 
   def create
-    @teams_user = authorize TeamsUser.new(teams_user_params)
+    @teams_user = authorize TeamsUser.new(teams_user_create_params)
 
     if @teams_user.save
       redirect_to team_url(@team), notice: I18n.t('teams_users.created')
@@ -27,7 +27,7 @@ class TeamsUsersController < ApplicationController
   def update
     authorize @teams_user
 
-    if @teams_user.update(teams_user_params)
+    if @teams_user.update(team_user_update_params)
       redirect_to team_url(@team), notice: I18n.t('teams_users.updated')
     else
       redirect_to team_url(@team),
@@ -44,7 +44,11 @@ class TeamsUsersController < ApplicationController
 
   private
 
-  def teams_user_params
-    params.require(:teams_user).permit(:user_id, :team_id, :role).with_defaults(user_id: current_user.id, role: :member)
+  def teams_user_create_params
+    params.require(:teams_user).permit(:team_id).with_defaults(user_id: current_user.id, role: :member)
+  end
+
+  def team_user_update_params
+    params.require(:teams_user).permit(:role)
   end
 end

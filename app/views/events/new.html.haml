@@ -10,7 +10,8 @@
                           data: { action: 'slug-form#prefillSlug' }
     = f.label :name, t('events.name')
   .form-floating.mb-3
-    = f.text_field :slug, required: true, class: 'form-control', placeholder: t('events.slug'), pattern: '^[a-z0-9_-]+$',
+    = f.text_field :slug, required: true, class: 'form-control', placeholder: t('events.slug'),
+                          pattern: '^[a-z0-9_-]+$',
                           data: { 'slug-form-target': 'slug' }
     = f.label :slug, t('events.slug')
   .form-floating.mb-3
