@@ -252,7 +252,7 @@ GEM
     pundit (2.3.1)
       activesupport (>= 3.0.0)
     racc (1.7.3)
-    rack (3.0.9)
+    rack (3.0.9.1)
     rack-oauth2 (2.2.1)
       activesupport
       attr_required
@@ -378,7 +378,7 @@ GEM
     thor (1.3.0)
     tilt (2.3.0)
     timeout (0.4.1)
-    turbo-rails (1.5.0)
+    turbo-rails (2.0.4)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
       railties (>= 6.0.0)
