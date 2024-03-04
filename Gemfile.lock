@@ -242,7 +242,7 @@ GEM
     parser (3.3.0.5)
       ast (~> 2.4.1)
       racc
-    pg (1.5.4)
+    pg (1.5.6)
     popper_js (2.11.8)
     psych (5.1.2)
       stringio
@@ -433,7 +433,7 @@ DEPENDENCIES
   omniauth-openid
   omniauth-rails_csrf_protection
   omniauth_openid_connect
-  pg (~> 1.1)
+  pg (~> 1.5)
   puma (>= 5.0)
   pundit (~> 2.3)
   rails (~> 7.1.3)
