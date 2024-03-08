@@ -118,8 +118,7 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    drb (2.2.0)
-      ruby2_keywords
+    drb (2.2.1)
     email_validator (2.2.4)
       activemodel
     erubi (1.12.0)
@@ -151,7 +150,7 @@ GEM
       rubocop (>= 1.0)
       sysexits (~> 1.1)
     hashie (5.0.0)
-    i18n (1.14.1)
+    i18n (1.14.4)
       concurrent-ruby (~> 1.0)
     icalendar (2.10.1)
       ice_cube (~> 0.16)
@@ -161,7 +160,7 @@ GEM
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
     io-console (0.7.2)
-    irb (1.11.2)
+    irb (1.12.0)
       rdoc
       reline (>= 0.4.2)
     jbuilder (2.11.5)
@@ -252,7 +251,7 @@ GEM
     pundit (2.3.1)
       activesupport (>= 3.0.0)
     racc (1.7.3)
-    rack (3.0.9)
+    rack (3.0.9.1)
     rack-oauth2 (2.2.1)
       activesupport
       attr_required
@@ -310,7 +309,7 @@ GEM
     redis-client (0.20.0)
       connection_pool
     regexp_parser (2.9.0)
-    reline (0.4.2)
+    reline (0.4.3)
       io-console (~> 0.5)
     responders (3.1.1)
       actionpack (>= 5.2)
@@ -338,7 +337,6 @@ GEM
       rubocop-ast (>= 1.30.0, < 2.0)
     ruby-openid (2.9.2)
     ruby-progressbar (1.13.0)
-    ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     sassc (2.4.0)
       ffi (~> 1.9)
@@ -375,10 +373,10 @@ GEM
       faraday-follow_redirects
     sysexits (1.2.0)
     temple (0.10.3)
-    thor (1.3.0)
+    thor (1.3.1)
     tilt (2.3.0)
     timeout (0.4.1)
-    turbo-rails (1.5.0)
+    turbo-rails (2.0.5)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
       railties (>= 6.0.0)
