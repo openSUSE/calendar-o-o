@@ -36,8 +36,8 @@
       .col-auto
         %i.fas.fa-fw.fa-clock
       .col
-        %div= local_time(@event.starts_at, :long)
-        %div= local_time(@event.ends_at, :long)
+        %div= local_time(@event.starts_at, '%B %d, %Y %H:%M %Z')
+        %div= local_time(@event.ends_at, '%B %d, %Y %H:%M %Z')
     - if @event.schedule_recurrences.present?
       .row.g-2.mb-2
         .col-auto
