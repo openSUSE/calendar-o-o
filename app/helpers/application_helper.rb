@@ -12,9 +12,9 @@ module ApplicationHelper
     date += ' - '
 
     date += if from.to_date == to.to_date
-              local_time(to, '%H:%M')
+              local_time(to, '%H:%M %Z')
             else
-              local_time(to, :short)
+              local_time(to, '%d %b %H:%M %Z')
             end
 
     date

@@ -41,7 +41,7 @@ en:
   close: 'Close'
   sign_up: 'Sign up'
   sign_up_to: "Sign up to %{provider}"
-  sign_in_to: "Log in with %{provider}"
+  sign_in_with: "Log in with %{provider}"
   or: 'or'
   username: 'Username'
   password: 'Password'
