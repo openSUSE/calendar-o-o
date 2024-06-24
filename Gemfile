@@ -66,7 +66,7 @@ gem 'ice_cube', '~> 0.16.4'
 gem 'icalendar', '~> 2.10'
 
 # The css + js framework
-gem 'bootstrap', '~> 5.3.2'
+gem 'bootstrap', '~> 5.3.3'
 gem 'sassc-rails', '~> 2.1'
 
 # Icons that go with it
