@@ -11,7 +11,6 @@ RUN usermod -u $CONTAINER_USERID web
 
 ADD Gemfile /web/Gemfile
 ADD Gemfile.lock /web/Gemfile.lock
-COPY vendor /web/vendor
 RUN chown -R web /web
 RUN chown -R web /bundler/vendor
 
@@ -20,11 +19,13 @@ WORKDIR /web
 
 ENV BUNDLE_FORCE_RUBY_PLATFORM=true
 
-RUN bundle config build.ffi --enable-system-libffi; \
+RUN set -efu ; \
+    bundle config build.ffi --enable-system-libffi; \
     bundle config build.nokogiri --use-system-libraries; \
     bundle config build.sassc --disable-march-tune-native; \
-    bundle config build.nio4r --with-cflags='-Wno-return-type'
+    bundle config build.nio4r --with-cflags='-Wno-return-type';\
+    bundle config set path /bundler/vendor
 
-RUN bundle install --path /bundler/vendor --jobs=3 --retry=3
+RUN bundle install --jobs=3 --retry=3
 
 CMD ["bin/rails", "server", "-b", "0.0.0.0"]
