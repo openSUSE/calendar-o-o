@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby.ruby3.2
+#!/usr/bin/env ruby.ruby3.3
 # frozen_string_literal: true
 
 APP_PATH = File.expand_path('../config/application', __dir__)
