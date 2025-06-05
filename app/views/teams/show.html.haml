@@ -27,7 +27,7 @@
         - teams_users.each do |teams_user|
           = render partial: 'teams_users/teams_user', locals: { teams_user:, team: @team }
   .col-md-6
-    - @team.events.each do |event|
+    - @team.events.sort_by { |e| e.schedule&.next_occurrence || Time.zone.at(0) }.each do |event|
       .card.card-body.mb-3.w-100
         .row
           = link_to(team_event_path(@team, event), class: 'col text-decoration-none link-body-emphasis') do
