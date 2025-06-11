@@ -47,7 +47,6 @@ cd calendar-o-o
 cp config/database.sample.yml config/database.yml
 cp config/site.sample.yml config/site.yml
 docker-compose build
-docker-compose run web bundle install --path /bundler/vendor --jobs=3 --retry=3
 docker-compose run web bin/rails db:create db:migrate
 docker-compose up
 ```
