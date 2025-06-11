@@ -6,6 +6,7 @@ development:
   hostname: localhost:3000
   authentication:
     local: true
+  theme: openSUSE
 
 production:
   program_name: openSUSE Calendar
