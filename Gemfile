@@ -60,7 +60,7 @@ gem 'omniauth-rails_csrf_protection'
 gem 'pundit', '~> 2.3'
 
 # Gem that helps with recurrency
-gem 'ice_cube', '~> 0.16.4'
+gem 'ice_cube', '~> 0.17.0'
 
 # Creating icalendar (.ics) files
 gem 'icalendar', '~> 2.10'
