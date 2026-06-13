@@ -6,6 +6,8 @@ class EventOccurrence < ApplicationRecord
 
   belongs_to :event
 
+  validates :time, presence: true
+
   def exclude
     event.schedule_exceptions << ScheduleException.new(time: starts_at)
     event.save!
