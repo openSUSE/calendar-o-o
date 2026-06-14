@@ -12,7 +12,7 @@ class Team < ApplicationRecord
   enum :color, %w[pink red orange yellow green blue indigo purple]
 
   validates :slug,
-            format: { with: /\A[a-z0-9_-]+\z/, message: I18n.t('format_validation.alphanumeric_with_dashes') }
+            format: { with: /\A[a-z0-9_\-]+\z/, message: I18n.t('format_validation.alphanumeric_with_dashes') }
 
   COLOR = { pink: '#e83ed4',
             red: '#e01b24',
