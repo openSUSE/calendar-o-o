@@ -1,13 +1,15 @@
 = fields_for "event[schedule_occurrences_attributes][#{index}]", occurrence do |fr|
   = fr.hidden_field(:id, value: fr.object.id) if fr.object
-  .row
+  .row{ data: { controller: 'occurrence' } }
     .col
       .form-floating
-        = fr.datetime_local_field :time, class: 'form-control'
+        = fr.datetime_local_field :time, class: 'form-control', required: true,
+                                         data: { occurrence_target: 'time' }
         = fr.label :time, t('schedule_occurrences.time')
     .col-auto
       .form-destroy
-        = fr.check_box :_destroy, class: 'form-check-input'
+        = fr.check_box :_destroy, class: 'form-check-input',
+                                  data: { occurrence_target: 'destroy', action: 'change->occurrence#toggleRequired' }
         = fr.label :_destroy, t('schedule_occurrences.remove'), class: 'form-check-disabled'
         = fr.label :_destroy, t('schedule_occurrences.restore'), class: 'form-check-enabled'
     %hr.mt-3
