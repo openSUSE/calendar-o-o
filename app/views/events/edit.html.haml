@@ -13,7 +13,7 @@
     = f.label :name, t('events.name')
   .form-floating.mb-3
     = f.text_field :slug, required: true, class: 'form-control', placeholder: t('events.slug'),
-                          pattern: '^[a-z0-9_-]+$'
+                          pattern: '^[a-z0-9_\-]+$'
     = f.label :slug, t('events.slug')
   .form-floating.mb-3
     = f.text_area :description, class: 'form-control h-min mb-1', placeholder: t('events.description')
