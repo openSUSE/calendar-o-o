@@ -4,6 +4,8 @@
 class ScheduleOccurrence < ApplicationRecord
   belongs_to :event
 
+  validates :time, presence: true
+
   def time
     super&.in_time_zone(event.timezone)
   end
