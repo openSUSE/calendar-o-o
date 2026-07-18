@@ -7,7 +7,7 @@
           - periods = ScheduleRecurrence.frequencies.keys.map { |p| t("period.#{p}") }
           = t('schedule_recurrences.repeat_every_html',
               number: fr.number_field(:interval,
-                                      value: 1, class: 'form-control mx-1',
+                                      value: recurrence.interval, class: 'form-control mx-1',
                                       data: { 'recurrence-form-target': 'interval' }),
               period: fr.select(:frequency,
                                 periods, {},
