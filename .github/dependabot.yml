@@ -7,3 +7,9 @@ updates:
     schedule:
       interval: "daily"
     vendor: true
+
+    groups:
+      rubocop:
+        patterns:
+          - "rubocop"
+          - "rubocop-*"
