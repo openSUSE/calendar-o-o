@@ -25,7 +25,7 @@ class AlarmsController < ApplicationController
     if @alarm.save
       redirect_to team_event_alarms_url(@team, @event, @alarm), notice: I18n.t('alarms.created')
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -35,7 +35,7 @@ class AlarmsController < ApplicationController
     if @alarm.update(alarm_params)
       redirect_to team_event_alarms_url(@team, @event, @alarm), notice: I18n.t('alarms.updated')
     else
-      render :update, status: :unprocessable_entity
+      render :update, status: :unprocessable_content
     end
   end
 

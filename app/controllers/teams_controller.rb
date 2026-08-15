@@ -37,7 +37,7 @@ class TeamsController < ApplicationController
     if @team.save
       redirect_to team_url(@team), notice: I18n.t('teams.created')
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -47,7 +47,7 @@ class TeamsController < ApplicationController
     if @team.update(team_params)
       redirect_to team_url(@team), notice: I18n.t('teams.updated')
     else
-      render :update, status: :unprocessable_entity
+      render :update, status: :unprocessable_content
     end
   end
 

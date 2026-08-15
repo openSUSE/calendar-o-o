@@ -9,10 +9,12 @@ class Team < ApplicationRecord
   has_many :events, dependent: :destroy
   has_many :alarms, as: :alarmable, dependent: :destroy
 
-  enum :color, %w[pink red orange yellow green blue indigo purple]
+  enum :color,
+       { 'pink' => 0, 'red' => 1, 'orange' => 2, 'yellow' => 3, 'green' => 4, 'blue' => 5, 'indigo' => 6,
+         'purple' => 7 }
 
   validates :slug,
-            format: { with: /\A[a-z0-9_\-]+\z/, message: I18n.t('format_validation.alphanumeric_with_dashes') }
+            format: { with: /\A[a-z0-9_-]+\z/, message: I18n.t('format_validation.alphanumeric_with_dashes') }
 
   COLOR = { pink: '#e83ed4',
             red: '#e01b24',

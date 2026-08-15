@@ -18,7 +18,7 @@ class Event < ApplicationRecord
                                 allow_destroy: true
 
   validates :slug,
-            format: { with: /\A[a-z0-9_\-]+\z/, message: I18n.t('format_validation.alphanumeric_with_dashes') }
+            format: { with: /\A[a-z0-9_-]+\z/, message: I18n.t('format_validation.alphanumeric_with_dashes') }
   validates :slug, uniqueness: { scope: :team_id }
 
   after_save :populate_occurrences

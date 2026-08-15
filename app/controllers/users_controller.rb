@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to users_url, notice: I18n.t('users.updated')
     else
-      redirect_to users_path, status: :unprocessable_entity
+      redirect_to users_path, status: :unprocessable_content
     end
   end
 
