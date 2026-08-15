@@ -11,8 +11,7 @@ RUN usermod -u $CONTAINER_USERID web
 
 ADD Gemfile /web/Gemfile
 ADD Gemfile.lock /web/Gemfile.lock
-RUN chown -R web /web
-RUN chown -R web /bundler/vendor
+RUN chown web /web /bundler/vendor
 
 USER web
 WORKDIR /web
