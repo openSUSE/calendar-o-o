@@ -23,7 +23,7 @@ RUN set -efu ; \
     bundle config build.nokogiri --use-system-libraries; \
     bundle config build.sassc --disable-march-tune-native; \
     bundle config build.nio4r --with-cflags='-Wno-return-type';\
-    bundle config set path /bundler/vendor
+    bundle config set --global path /bundler/vendor
 
 RUN bundle install --jobs=3 --retry=3
 
