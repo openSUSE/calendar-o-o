@@ -47,11 +47,11 @@ cd calendar-o-o
 cp config/database.sample.yml config/database.yml
 cp config/site.sample.yml config/site.yml
 docker-compose build
-docker-compose run web bin/rails db:create
-docker-compose run web bin/rails db:migrate
+docker-compose run --rm web bin/rails devel:setup
 docker-compose up
 ```
-and visit <http://127.0.0.1:3000/> to see the website running in your browser
+and visit <http://localhost:3000/> to see the website running in your browser.
+Log in as `admin` with password `wowzers`.
 
 # Running tests
 After making changes to the codebase, you may want to run some of the tests included to make sure your changes didn't break any other feature.
