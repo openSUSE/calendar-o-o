@@ -53,6 +53,19 @@ docker-compose up
 ```
 and visit <http://127.0.0.1:3000/> to see the website running in your browser
 
+## Creating dummy objects
+
+For testing, you probably want a user and team to create calendar entries with.
+
+```
+$ docker exec -it calendar-o-o-web-1 bin/rails c
+irb> u = User.create!(email: 'admin@example.com', password: 'admin123', name: 'admin', username: 'admin')
+irb> t = Team.create!(name: 'developers', slug: 'devs')
+irb> TeamsUser.create!(team: t, user: u, role: :owner)
+```
+
+The changes are immediately available in the running server.
+
 # Running tests
 After making changes to the codebase, you may want to run some of the tests included to make sure your changes didn't break any other feature.
 
