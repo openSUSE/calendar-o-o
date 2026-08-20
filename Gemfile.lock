@@ -253,7 +253,7 @@ GEM
     public_suffix (5.0.4)
     puma (6.4.2)
       nio4r (~> 2.0)
-    pundit (2.3.2)
+    pundit (2.5.2)
       activesupport (>= 3.0.0)
     racc (1.8.1)
     rack (3.2.7)
@@ -445,7 +445,7 @@ DEPENDENCIES
   omniauth_openid_connect
   pg (~> 1.5)
   puma (>= 5.0)
-  pundit (~> 2.3)
+  pundit (~> 2.5)
   rails (~> 7.1.3)
   redis (>= 4.0.1)
   rubocop
