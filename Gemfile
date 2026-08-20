@@ -57,7 +57,7 @@ gem 'omniauth_openid_connect'
 gem 'omniauth-rails_csrf_protection'
 
 # And authorization
-gem 'pundit', '~> 2.3'
+gem 'pundit', '~> 2.5'
 
 # Gem that helps with recurrency
 gem 'ice_cube', '~> 0.17.0'
