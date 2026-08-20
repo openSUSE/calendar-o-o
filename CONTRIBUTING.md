@@ -47,7 +47,8 @@ cd calendar-o-o
 cp config/database.sample.yml config/database.yml
 cp config/site.sample.yml config/site.yml
 docker-compose build
-docker-compose run web bin/rails db:create db:migrate
+docker-compose run web bin/rails db:create
+docker-compose run web bin/rails db:migrate
 docker-compose up
 ```
 and visit <http://127.0.0.1:3000/> to see the website running in your browser
