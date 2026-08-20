@@ -2,6 +2,7 @@
 
 # Adds omniauth handling to users table
 class AddOmniauthToUsers < ActiveRecord::Migration[7.1]
+  # rubocop:disable Rails/NotNullColumn
   def change
     change_table :users, bulk: true do |t|
       t.string :provider
@@ -11,4 +12,5 @@ class AddOmniauthToUsers < ActiveRecord::Migration[7.1]
       t.index :username, unique: true
     end
   end
+  # rubocop:enable Rails/NotNullColumn
 end

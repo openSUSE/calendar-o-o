@@ -3,6 +3,7 @@
 # The top level controller
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
+
   protect_from_forgery prepend: true
 
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -17,7 +18,7 @@ class ApplicationController < ActionController::Base
   def set_teams_user
     @teams_user = TeamsUser.find(params[:teams_user_id] || params[:id])
   rescue ActiveRecord::RecordNotFound
-    redirect_back fallback_location: team_url(@team), alert: I18n.t('teams_users.not_found')
+    redirect_back_or_to(team_url(@team), alert: I18n.t('teams_users.not_found'))
   end
 
   def set_event
@@ -29,13 +30,13 @@ class ApplicationController < ActionController::Base
   def set_event_occurrence
     @event_occurrence = EventOccurrence.find(params[:event_occurrence_id] || params[:id])
   rescue ActiveRecord::RecordNotFound
-    redirect_back fallback_location: team_event_url(@team, @event), alert: I18n.t('event_occurrences.not_found')
+    redirect_back_or_to(team_event_url(@team, @event), alert: I18n.t('event_occurrences.not_found'))
   end
 
   def set_alarm
     @alarm = Alarm.find(params[:alarm_id] || params[:id])
   rescue ActiveRecord::RecordNotFound
-    redirect_back fallback_location: team_event_alarms_url(@team, @event), alert: I18n.t('alarms.not_found')
+    redirect_back_or_to(team_event_alarms_url(@team, @event), alert: I18n.t('alarms.not_found'))
   end
 
   def set_user

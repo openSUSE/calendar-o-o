@@ -12,7 +12,7 @@ module ApplicationCable
     private
 
     def find_verified_user
-      user_id = cookies.encrypted&.[]('_calendar_oo_session')&.[]('warden.user.user.key')&.[](0)
+      user_id = cookies.encrypted['_calendar_oo_session']&.dig('warden.user.user.key', 0)
       if (verified_user = User.find_by(id: user_id))
         verified_user
       else

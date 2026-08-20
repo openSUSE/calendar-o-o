@@ -5,8 +5,8 @@ class ScheduleRecurrence < ApplicationRecord
   self.implicit_order_column = :created_at
 
   belongs_to :event
-  enum :frequency, %w[day week month year]
-  enum :month_type, %w[nth_of_month nth_weekday_of_month nth_last_weekday_of_month]
+  enum :frequency, { 'day' => 0, 'week' => 1, 'month' => 2, 'year' => 3 }
+  enum :month_type, { 'nth_of_month' => 0, 'nth_weekday_of_month' => 1, 'nth_last_weekday_of_month' => 2 }
 
   FREQUENCY_METRIC = { day: :daily, week: :weekly, month: :monthly, year: :yearly }.freeze
 
@@ -67,6 +67,6 @@ class ScheduleRecurrence < ApplicationRecord
 
   def nth_last_weekday(date)
     date.end_of_month
-    (((date.end_of_month.day - date.day)) / 7) + 1
+    ((date.end_of_month.day - date.day) / 7) + 1
   end
 end

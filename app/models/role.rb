@@ -5,7 +5,7 @@ class Role < ApplicationRecord
   self.implicit_order_column = :name
 
   belongs_to :user
-  enum :name, [:admin]
+  enum :name, { admin: 0 }
 
   # Only one instance of name per user
   validates :name, uniqueness: { scope: :user_id }

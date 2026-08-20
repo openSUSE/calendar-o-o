@@ -8,7 +8,7 @@ class EventsController < ApplicationController
   def show
     authorize @event
     @dated_occurrences = @event.occurrences.where('starts_at > ?',
-                                                  Date.yesterday).order('starts_at ASC').group_by do |o|
+                                                  Date.yesterday).order(:starts_at).group_by do |o|
       o.starts_at.strftime('%B %Y')
     end
 
@@ -32,7 +32,7 @@ class EventsController < ApplicationController
     if @event.save
       redirect_to team_event_url(@team, @event), notice: I18n.t('events.created')
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -42,7 +42,7 @@ class EventsController < ApplicationController
     if @event.update(event_parameters)
       redirect_to team_event_url(@team, @event), notice: I18n.t('events.updated')
     else
-      render :update, status: :unprocessable_entity
+      render :update, status: :unprocessable_content
     end
   end
 

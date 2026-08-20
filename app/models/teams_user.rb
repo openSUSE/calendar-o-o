@@ -6,7 +6,7 @@ class TeamsUser < ApplicationRecord
 
   belongs_to :team
   belongs_to :user
-  enum :role, %w[member admin owner]
+  enum :role, { 'member' => 0, 'admin' => 1, 'owner' => 2 }
 
   # Only one instance for user per team
   validates :user, uniqueness: { scope: :team_id }
