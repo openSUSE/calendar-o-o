@@ -2,7 +2,7 @@
   .container
     .d-flex.justify-content-between.align-items-center
       .copyright
-        = t(:copyright)
+        &copy; 2023-#{Date.current.year} #{t(:copyright)}
       .text-muted.text-align-end
         = t(:timezone_notice_html, timezone: local_time(Time.zone.now, format: '%Z'))
       %ul.list-inline.mb-0
