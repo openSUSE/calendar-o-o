@@ -56,13 +56,15 @@ class EventsController < ApplicationController
   private
 
   def event_parameters
-    event_params = params.require(:event).permit(
-      :name, :slug, :description, :meeting_url, :starts_at, :ends_at, :timezone,
-      schedule_recurrences_attributes: [
-        [:id, :interval, :frequency, :_destroy, :month_type, :ends_at, { week_days: [] }]
-      ],
-      schedule_exceptions_attributes: [%i[id time _destroy]],
-      schedule_occurrences_attributes: [%i[id time _destroy]]
+    event_params = params.expect(
+      event: [:name, :slug, :description, :meeting_url, :starts_at, :ends_at, :timezone,
+              {
+                schedule_recurrences_attributes: [
+                  [:id, :interval, :frequency, :_destroy, :month_type, :ends_at, { week_days: [] }]
+                ],
+                schedule_exceptions_attributes: [%i[id time _destroy]],
+                schedule_occurrences_attributes: [%i[id time _destroy]]
+              }]
     )
 
     apply_timezone_conversion(event_params)

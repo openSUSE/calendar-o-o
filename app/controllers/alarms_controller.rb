@@ -50,6 +50,6 @@ class AlarmsController < ApplicationController
 
   def alarm_params
     type = %i[alarm alarm_email alarm_notification].map { |t| params.key?(t) ? t : nil }.compact.first
-    params.require(type).permit(:type, :email, :interval, :period, :description, :alarmable_type, :alarmable_id)
+    params.expect(type => %i[type email interval period description alarmable_type alarmable_id])
   end
 end

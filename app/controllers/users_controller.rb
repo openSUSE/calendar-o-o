@@ -23,6 +23,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(roles_attributes: [%i[name id _destroy]])
+    params.expect(user: [{ roles_attributes: [%i[name id _destroy]] }])
   end
 end

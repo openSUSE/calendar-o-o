@@ -45,10 +45,10 @@ class TeamsUsersController < ApplicationController
   private
 
   def teams_user_create_params
-    params.require(:teams_user).permit(:team_id).with_defaults(user_id: current_user.id, role: :member)
+    params.expect(teams_user: [:team_id]).with_defaults(user_id: current_user.id, role: :member)
   end
 
   def team_user_update_params
-    params.require(:teams_user).permit(:role)
+    params.expect(teams_user: [:role])
   end
 end
