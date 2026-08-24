@@ -155,8 +155,11 @@ GEM
       logger
     i18n (1.15.2)
       concurrent-ruby (~> 1.0)
-    icalendar (2.10.1)
+    icalendar (2.12.4)
+      base64
       ice_cube (~> 0.16)
+      logger
+      ostruct
     ice_cube (0.17.0)
     importmap-rails (2.0.1)
       actionpack (>= 6.0.0)
@@ -246,6 +249,7 @@ GEM
       validate_url
       webfinger (~> 2.0)
     orm_adapter (0.5.0)
+    ostruct (0.6.3)
     parallel (2.1.0)
     parser (3.3.12.0)
       ast (~> 2.4.1)
@@ -444,7 +448,7 @@ DEPENDENCIES
   font-awesome-sass (~> 6.5)
   haml-rails (~> 2.0)
   haml_lint
-  icalendar (~> 2.10)
+  icalendar (~> 2.12)
   ice_cube (~> 0.17.0)
   importmap-rails
   jbuilder
