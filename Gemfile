@@ -63,7 +63,7 @@ gem 'pundit', '~> 2.5'
 gem 'ice_cube', '~> 0.17.0'
 
 # Creating icalendar (.ics) files
-gem 'icalendar', '~> 2.10'
+gem 'icalendar', '~> 2.12'
 
 # The css + js framework
 gem 'bootstrap', '~> 5.3.3'
