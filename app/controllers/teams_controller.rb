@@ -61,6 +61,6 @@ class TeamsController < ApplicationController
   private
 
   def team_params
-    params.require(:team).permit(:name, :slug, :color)
+    params.expect(team: %i[name slug color])
   end
 end
