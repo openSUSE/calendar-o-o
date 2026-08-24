@@ -49,7 +49,7 @@ gem 'bootsnap', require: false
 # gem "image_processing", "~> 1.2"
 
 # Gems for authentication
-gem 'devise', '~> 4.9'
+gem 'devise', '~> 5.0'
 
 gem 'omniauth'
 gem 'omniauth-openid'
