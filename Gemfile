@@ -73,7 +73,7 @@ gem 'sassc-rails', '~> 2.1'
 gem 'font-awesome-sass', '~> 6.5'
 
 # Haml templating
-gem 'haml-rails', '~> 2.0'
+gem 'haml-rails', '~> 3.1'
 
 # Displaying user's time instead of server's time
 gem 'local_time', '~> 3.0'
