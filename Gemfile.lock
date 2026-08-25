@@ -223,9 +223,11 @@ GEM
       logger
       rack (>= 2.2.3)
       rack-protection
-    omniauth-openid (2.0.1)
-      omniauth (>= 1.0, < 3.0)
-      rack-openid (~> 1.4.0)
+    omniauth-openid (2.0.2)
+      omniauth (>= 1.1)
+      rack-openid (~> 1.4)
+      ruby-openid (~> 2.1, >= 2.1.8)
+      version_gem (~> 1.1, >= 1.1.8)
     omniauth-rails_csrf_protection (2.0.1)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
@@ -415,6 +417,7 @@ GEM
     validate_url (1.0.15)
       activemodel (>= 3.0.0)
       public_suffix
+    version_gem (1.1.15)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.1)
