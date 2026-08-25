@@ -28,7 +28,7 @@
 #       enabled: "ON"
 
 en:
-  copyright: 'Copyright © openSUSE Contributors'
+  copyright: 'openSUSE Contributors'
   timezone_notice_html: "All times on this page are in %{timezone} timezone"
   source_code: 'Source Code'
   license: 'License'
