@@ -70,7 +70,7 @@ gem 'bootstrap', '~> 5.3.8'
 gem 'sassc-rails', '~> 2.1'
 
 # Icons that go with it
-gem 'font-awesome-sass', '~> 6.5'
+gem 'font-awesome-sass', '~> 6.7'
 
 # Haml templating
 gem 'haml-rails', '~> 3.1'
