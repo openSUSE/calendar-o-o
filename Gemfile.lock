@@ -106,7 +106,7 @@ GEM
     connection_pool (3.0.2)
     crass (1.0.7)
     date (3.5.1)
-    debug (1.9.2)
+    debug (1.11.1)
       irb (~> 1.10)
       reline (>= 0.3.8)
     devise (5.0.4)
